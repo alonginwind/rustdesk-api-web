@@ -69,14 +69,14 @@
       <el-table :data="listRes.list" v-loading="listRes.loading" border size="small" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center"/>
         <template v-for="c in visibleColumns.filter(cc => cc.visible)" :key="c">
-          <el-table-column v-if="c.name==='id'" prop="id" label="ID" align="center" width="150">
+          <el-table-column v-if="c.name==='id'" prop="id" label="ID" align="center" width="120">
             <template #default="{row}">
               <span>{{ row.id }} <el-icon @click="handleClipboard(row.id, $event)"><CopyDocument/></el-icon></span>
             </template>
           </el-table-column>
-          <el-table-column v-if="c.name==='cpu'" prop="cpu" label="CPU" align="center" width="100" show-overflow-tooltip/>
-          <el-table-column v-if="c.name==='hostname'" prop="hostname" :label="T('Hostname')" align="center" width="120"/>
-          <el-table-column v-if="c.name==='memory'" prop="memory" :label="T('Memory')" align="center" width="120"/>
+          <el-table-column v-if="c.name==='cpu'" prop="cpu" label="CPU" align="center" width="80" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='hostname'" prop="hostname" :label="T('Hostname')" align="center" width="120" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='memory'" prop="memory" :label="T('Memory')" align="center" width="80"/>
           <el-table-column v-if="c.name==='os'" prop="os" :label="T('Os')" align="center" width="120" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='last_online_time'" prop="last_online_time" :label="T('LastOnlineTime')" align="center" min-width="120">
             <template #default="{row}">
@@ -85,17 +85,17 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column v-if="c.name==='last_online_ip'" prop="last_online_ip" :label="T('LastOnlineIp')" align="center" min-width="120"/>
+          <el-table-column v-if="c.name==='last_online_ip'" prop="last_online_ip" :label="T('LastOnlineIp')" align="center" width="120"/>
           <el-table-column v-if="c.name==='username'" prop="username" :label="T('Username')" align="center" width="120"/>
-          <el-table-column v-if="c.name==='group_id'" prop="group_id" :label="T('Group')" align="center" width="120">
+          <el-table-column v-if="c.name==='group_id'" prop="group_id" :label="T('Group')" align="center" width="40">
             <template #default="{row}">
               <span v-if="row.group_id"> <el-tag>{{ groupListRes.list?.find(g => g.id === row.group_id)?.name }} </el-tag> </span>
               <span v-else> - </span>
             </template>
           </el-table-column>
-          <el-table-column v-if="c.name==='uuid'" prop="uuid" :label="T('Uuid')" align="center" width="120" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='uuid'" prop="uuid" :label="T('Uuid')" align="center" width="100" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='version'" prop="version" :label="T('Version')" align="center" width="80"/>
-          <el-table-column v-if="c.name==='alias'" prop="alias" :label="T('Alias')" align="center" width="80"/>
+          <el-table-column v-if="c.name==='alias'" prop="alias" :label="T('Alias')" align="center" width="240" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='created_at'" prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
           <el-table-column v-if="c.name==='updated_at'" prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
         </template>
