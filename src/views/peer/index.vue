@@ -167,7 +167,7 @@
     </el-dialog>
 
     <el-dialog v-model="ABFormVisible" width="800" :title="T('Create')" destroy-on-close>
-      <createABForm :peer="clickRow" @success="ABFormVisible=false" @cancel="ABFormVisible=false"></createABForm>
+      <createABForm :peer="clickRow" @success="ABFormVisible=false; getList()" @cancel="ABFormVisible=false"></createABForm>
     </el-dialog>
 
     <el-dialog v-model="batchABFormVisible" width="800" :title="T('Create')">
