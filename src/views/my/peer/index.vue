@@ -21,9 +21,9 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
-          <el-button type="success" @click="toExport">{{ T('Export') }}</el-button>
+          <!--          <el-button type="success" @click="toExport">{{ T('Export') }}</el-button>-->
           <!--          <el-button type="danger" @click="toBatchDelete">{{ T('BatchDelete') }}</el-button>-->
-          <el-button type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>
+          <!--          <el-button type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>-->
 
         </el-form-item>
       </el-form>
@@ -37,7 +37,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="cpu" label="CPU" align="center" width="100" show-overflow-tooltip/>
-        <el-table-column prop="hostname" :label="T('Hostname')" align="center" width="120"/>
+        <el-table-column prop="hostname" :label="T('Hostname')" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="memory" :label="T('Memory')" align="center" width="120"/>
         <el-table-column prop="os" :label="T('Os')" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="last_online_time" :label="T('LastOnlineTime')" align="center" min-width="120">
@@ -106,8 +106,7 @@
     <el-dialog v-model="ABFormVisible" width="800" :title="T('Create')">
       <el-form class="dialog-form" ref="form" :model="ABFormData" label-width="120px">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
-          <el-select v-model="ABFormData.collection_id" clearable @change="changeCollectionForUpdate">
-            <el-option :value="0" :label="T('MyAddressBook')"></el-option>
+          <el-select v-model="ABFormData.collection_id" clearable @change="onCollectionChange">
             <el-option v-for="c in collectionListResForUpdate.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
           </el-select>
         </el-form-item>
@@ -301,18 +300,25 @@
     }
   }
 
+  const onCollectionChange = (val) => {
+    if (val > 0) {
+      ABFormData.user_id = 1
+    }
+    changeCollectionForUpdate(val)
+  }
+
   const {
     platformList: ABPlatformList,
     formVisible: ABFormVisible,
     formData: ABFormData,
     collectionListResForUpdate,
-    getCollectionListForUpdate,
+    getCollectionSharedForUpdate,
     tagListRes,
     changeCollectionForUpdate,
     submit: ABSubmit,
     fromPeer,
   } = useABRepositories('my')
-  onMounted(getCollectionListForUpdate)
+  onMounted(getCollectionSharedForUpdate)
   const toAddressBook = (peer) => {
     fromPeer(peer)
     ABFormVisible.value = true

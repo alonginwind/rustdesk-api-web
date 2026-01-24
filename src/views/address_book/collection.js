@@ -1,12 +1,12 @@
 import { reactive, ref } from 'vue'
 import { list as admin_list, create as admin_create, update as admin_update, remove as admin_remove } from '@/api/address_book_collection'
-import { list as my_list, create as my_create, update as my_update, remove as my_remove } from '@/api/my/address_book_collection'
+import { list_shared as my_shared, list as my_list, create as my_create, update as my_update, remove as my_remove } from '@/api/my/address_book_collection'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { T } from '@/utils/i18n'
 
 const apis = {
   admin: { list: admin_list, remove: admin_remove, update: admin_update, create: admin_create },
-  my: { list: my_list, remove: my_remove, create: my_create, update: my_update },
+  my: {shared: my_shared, list: my_list, remove: my_remove, create: my_create, update: my_update },
 }
 
 export function useRepositories (api_type = 'my') {
@@ -20,6 +20,15 @@ export function useRepositories (api_type = 'my') {
     user_id: null,
   })
 
+  const getShared = async () => {
+    listRes.loading = true
+    const res = await apis[api_type].shared(listQuery).catch(_ => false)
+    listRes.loading = false
+    if (res) {
+      listRes.list = res.data.list
+      listRes.total = res.data.total
+    }
+  }
   const getList = async () => {
     listRes.loading = true
     const res = await apis[api_type].list(listQuery).catch(_ => false)
@@ -88,6 +97,7 @@ export function useRepositories (api_type = 'my') {
   return {
     listRes,
     listQuery,
+    getShared,
     getList,
     handlerQuery,
     del,

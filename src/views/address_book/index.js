@@ -112,6 +112,7 @@ export function useRepositories (api_type = 'my') {
     listRes: collectionListResForUpdate,
     listQuery: collectionListQueryForUpdate,
     getList: getCollectionListForUpdate,
+    getShared: getCollectionSharedForUpdate,
   } = useCollectionRepositories(api_type)
   collectionListQueryForUpdate.page_size = 9999
   const {
@@ -230,6 +231,7 @@ export function useRepositories (api_type = 'my') {
     toAdd,
     submit,
     getCollectionListForUpdate,
+    getCollectionSharedForUpdate,
     collectionListResForUpdate,
     changeUserForUpdate,
     changeCollectionForUpdate,

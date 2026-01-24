@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function list_shared (params) {
+  return request({
+    url: '/my/address_book_collection/list_shared',
+    params,
+  })
+}
+
 export function list (params) {
   return request({
     url: '/my/address_book_collection/list',
