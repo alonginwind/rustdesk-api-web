@@ -36,7 +36,7 @@
         </el-table-column>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
         <!--        <el-table-column prop="updated_at" label="更新时间" align="center"/>-->
-        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" width="300" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" width="200" fixed="right">
           <template #default="{row}">
             <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
             <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
@@ -53,7 +53,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" width="800" :title="!formData.id?T('Create') :T('Update') " :close-on-click-modal="false">
+    <el-dialog v-model="formVisible" :width="isMobile ? 600 : 800" :title="!formData.id?T('Create') :T('Update') " :close-on-click-modal="false">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item :label="T('AddressBookName')">
           {{ props.collection.name }}
@@ -109,7 +109,9 @@
   import { T } from '@/utils/i18n'
   import { useRepositories } from '@/views/address_book/rule'
   import { onActivated, onMounted, watch } from 'vue'
+  import { useIsMobile } from '@/utils/useIsMobile'
 
+  const isMobile = useIsMobile()
   const props = defineProps({
     collection: {
       type: Object,

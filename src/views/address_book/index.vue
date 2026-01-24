@@ -66,10 +66,10 @@
         <el-table-column prop="alias" :label="T('Alias')" align="center" width="250" show-overflow-tooltip/>
         <el-table-column prop="peer.version" :label="T('Version')" align="center" width="100"/>
         <el-table-column prop="hash" :label="T('Hash')" align="center" width="150" show-overflow-tooltip/>
-        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" width="500" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 200 : 500" fixed="right">
           <template #default="{row}">
-            <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+            <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+            <el-button v-if="!isMobile && appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
             <!--            <el-button type="primary" @click="toShowShare(row)">{{ T('ShareByWebClient') }}</el-button>-->
             <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
             <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
@@ -86,7 +86,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" width="800" :title="!formData.row_id?T('Create') :T('Update') ">
+    <el-dialog v-model="formVisible" :width="isMobile ? 600 : 800" :title="!formData.row_id?T('Create') :T('Update') ">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item :label="T('Owner')" prop="user_id" required>
           <el-select v-model="formData.user_id" @change="changeUserForUpdate">
@@ -189,7 +189,9 @@
   import { CopyDocument } from '@element-plus/icons'
   import PlatformIcons from '@/components/icons/platform.vue'
   import { loadAllUsers } from '@/global'
+  import { useIsMobile } from '@/utils/useIsMobile'
 
+  const isMobile = useIsMobile()
   const appStore = useAppStore()
   const route = useRoute()
   const { allUsers, getAllUsers } = loadAllUsers()

@@ -54,10 +54,10 @@
         <el-table-column prop="alias" :label="T('Alias')" align="center" width="80"/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
         <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
-        <el-table-column :label="T('Actions')" align="center" width="500" class-name="table-actions" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 200 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
-            <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+            <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+            <el-button v-if="!isMobile && appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
             <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
             <el-button @click="toView(row)">{{ T('View') }}</el-button>
             <!--            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>-->
@@ -74,7 +74,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="T('Information')" width="800" :style="{ textAlign: 'center' }">
+    <el-dialog v-model="formVisible" :title="T('Information')" :width="isMobile ? 600 : 800" :style="{ textAlign: 'center' }">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item label="ID" prop="id">
           <el-input v-model="formData.id" disabled></el-input>
@@ -103,7 +103,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="ABFormVisible" width="800" :title="T('Create')">
+    <el-dialog v-model="ABFormVisible" :width="isMobile ? 600 : 800" :title="T('Create')">
       <el-form class="dialog-form" ref="form" :model="ABFormData" label-width="120px">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
           <el-select v-model="ABFormData.collection_id" clearable @change="onCollectionChange">
@@ -191,7 +191,9 @@
   import { CopyDocument } from '@element-plus/icons'
   import { handleClipboard } from '@/utils/clipboard'
   import { batchCreateFromPeers } from '@/api/my/address_book'
+  import { useIsMobile } from '@/utils/useIsMobile'
 
+  const isMobile = useIsMobile()
   const appStore = useAppStore()
   const listRes = reactive({
     list: [], total: 0, loading: false,
