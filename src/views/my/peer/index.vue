@@ -145,7 +145,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="ABFormVisible = false">{{ T('Cancel') }}</el-button>
-          <el-button @click="ABSubmit" type="primary">{{ T('Submit') }}</el-button>
+          <el-button @click="async () => { await ABSubmit(); getList() }" type="primary">{{ T('Submit') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
