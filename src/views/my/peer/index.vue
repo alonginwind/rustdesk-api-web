@@ -74,7 +74,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="T('Information')" :width="isMobile ? 600 : 800" :style="{ textAlign: 'center' }">
+    <el-dialog v-model="formVisible" :title="T('Information')" :width="isMobile ? 500 : 800" :style="{ textAlign: 'center' }">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item label="ID" prop="id">
           <el-input v-model="formData.id" disabled></el-input>
@@ -103,7 +103,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="ABFormVisible" :width="isMobile ? 600 : 800" :title="T('Create')">
+    <el-dialog v-model="ABFormVisible" :width="isMobile ? 500 : 800" :title="T('Create')">
       <el-form class="dialog-form" ref="form" :model="ABFormData" label-width="120px">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
           <el-select v-model="ABFormData.collection_id" clearable @change="onCollectionChange">

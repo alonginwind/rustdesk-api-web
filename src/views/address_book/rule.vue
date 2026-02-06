@@ -53,7 +53,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :width="isMobile ? 600 : 800" :title="!formData.id?T('Create') :T('Update') " :close-on-click-modal="false">
+    <el-dialog v-model="formVisible" :width="isMobile ? 500 : 800" :title="!formData.id?T('Create') :T('Update') " :close-on-click-modal="false">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item :label="T('AddressBookName')">
           {{ props.collection.name }}

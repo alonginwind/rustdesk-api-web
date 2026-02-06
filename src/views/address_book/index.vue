@@ -2,16 +2,16 @@
   <div>
     <el-card class="list-query" shadow="hover">
       <el-form inline label-width="120px">
-        <el-form-item :label="T('Owner')">
-          <el-select v-model="listQuery.user_id" clearable @change="changeQueryUser">
-            <el-option
-                v-for="item in allUsers"
-                :key="item.id"
-                :label="item.username"
-                :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <!--     <el-form-item :label="T('Owner')">-->
+        <!--       <el-select v-model="listQuery.user_id" clearable @change="changeQueryUser">-->
+        <!--         <el-option-->
+        <!--             v-for="item in allUsers"-->
+        <!--             :key="item.id"-->
+        <!--             :label="item.username"-->
+        <!--             :value="item.id"-->
+        <!--         ></el-option>-->
+        <!--       </el-select>-->
+        <!--     </el-form-item>-->
         <el-form-item :label="T('AddressBookName')">
           <el-select v-model="listQuery.collection_id" clearable>
             <el-option :value="0" :label="T('MyAddressBook')"></el-option>
@@ -21,11 +21,11 @@
         <el-form-item :label="T('Id')">
           <el-input v-model="listQuery.id" clearable></el-input>
         </el-form-item>
-        <el-form-item :label="T('Username')">
-          <el-input v-model="listQuery.username" clearable></el-input>
-        </el-form-item>
-        <el-form-item :label="T('Hostname')">
-          <el-input v-model="listQuery.hostname" clearable></el-input>
+        <!--     <el-form-item :label="T('Username')">-->
+        <!--       <el-input v-model="listQuery.username" clearable></el-input>-->
+        <!--     </el-form-item>-->
+        <el-form-item :label="T('Alias')">
+          <el-input v-model="listQuery.alias" clearable></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
@@ -86,7 +86,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :width="isMobile ? 600 : 800" :title="!formData.row_id?T('Create') :T('Update') ">
+    <el-dialog v-model="formVisible" :width="isMobile ? 500 : 800" :title="!formData.row_id?T('Create') :T('Update') ">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item :label="T('Owner')" prop="user_id" required>
           <el-select v-model="formData.user_id" @change="changeUserForUpdate">

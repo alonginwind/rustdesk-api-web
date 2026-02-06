@@ -5,9 +5,9 @@
         <el-form-item label="ID">
           <el-input v-model="listQuery.id" clearable/>
         </el-form-item>
-        <el-form-item :label="T('Hostname')">
-          <el-input v-model="listQuery.hostname" clearable/>
-        </el-form-item>
+        <!--       <el-form-item :label="T('Hostname')">-->
+        <!--         <el-input v-model="listQuery.hostname" clearable/>-->
+        <!--       </el-form-item>-->
         <el-form-item :label="T('LastOnlineTime')" label-width="100px">
           <el-select v-model="listQuery.time_ago" clearable>
             <el-option
@@ -19,8 +19,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="T('Username')">
-          <el-input v-model="listQuery.username" clearable/>
+        <el-form-item :label="T('Alias')">
+          <el-input v-model="listQuery.alias" clearable/>
         </el-form-item>
         <el-form-item label="IP">
           <el-input v-model="listQuery.ip" clearable/>
@@ -120,7 +120,7 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="!formData.row_id?T('Create'):T('Update')" :width="isMobile ? 600 : 800">
+    <el-dialog v-model="formVisible" :title="!formData.row_id?T('Create'):T('Update')" :width="isMobile ? 500 : 800">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item label="ID" prop="id" required>
           <el-input v-model="formData.id"></el-input>
@@ -282,6 +282,7 @@
     id: '',
     hostname: '',
     username: '',
+    alias: '',
     ip: '',
   })
 
