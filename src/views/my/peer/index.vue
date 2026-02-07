@@ -49,11 +49,11 @@
         </el-table-column>
         <el-table-column prop="last_online_ip" :label="T('LastOnlineIp')" align="center" min-width="120"/>
         <el-table-column prop="username" :label="T('Username')" align="center" width="120"/>
-        <el-table-column prop="uuid" :label="T('Uuid')" align="center" width="120" show-overflow-tooltip/>
+        <!--    <el-table-column prop="uuid" :label="T('Uuid')" align="center" width="120" show-overflow-tooltip/>-->
         <el-table-column prop="version" :label="T('Version')" align="center" width="80"/>
-        <el-table-column prop="alias" :label="T('Alias')" align="center" width="80"/>
+        <!--    <el-table-column prop="alias" :label="T('Alias')" align="center" width="80"/>-->
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
-        <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
+        <!--    <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>-->
         <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 200 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
             <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
@@ -69,6 +69,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">

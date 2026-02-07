@@ -115,6 +115,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -538,12 +539,12 @@
     { name: 'last_online_time', visible: true, label: 'LastOnlineTime' },
     { name: 'last_online_ip', visible: true, label: 'LastOnlineIp' },
     { name: 'username', visible: true, label: 'Username' },
-    { name: 'group_id', visible: true, label: 'Group' },
-    { name: 'uuid', visible: true, label: 'Uuid' },
+    { name: 'group_id', visible: false, label: 'Group' },
+    { name: 'uuid', visible: false, label: 'Uuid' },
     { name: 'version', visible: true, label: 'Version' },
     { name: 'alias', visible: true, label: 'Alias' },
     { name: 'created_at', visible: true, label: 'CreatedAt' },
-    { name: 'updated_at', visible: true, label: 'UpdatedAt' },
+    { name: 'updated_at', visible: false, label: 'UpdatedAt' },
   ])
   const visibleColumns = ref(JSON.parse(localStorage.getItem('peer_visible_columns')) || allColumns.value)
   const showColumnSetting = () => {

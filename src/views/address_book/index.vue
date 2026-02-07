@@ -12,12 +12,12 @@
         <!--         ></el-option>-->
         <!--       </el-select>-->
         <!--     </el-form-item>-->
-        <el-form-item :label="T('AddressBookName')">
-          <el-select v-model="listQuery.collection_id" clearable>
-            <el-option :value="0" :label="T('MyAddressBook')"></el-option>
-            <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
-          </el-select>
-        </el-form-item>
+        <!--     <el-form-item :label="T('AddressBookName')">-->
+        <!--       <el-select v-model="listQuery.collection_id" clearable>-->
+        <!--         <el-option :value="0" :label="T('MyAddressBook')"></el-option>-->
+        <!--         <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>-->
+        <!--       </el-select>-->
+        <!--     </el-form-item>-->
         <el-form-item :label="T('Id')">
           <el-input v-model="listQuery.id" clearable></el-input>
         </el-form-item>
@@ -81,6 +81,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
