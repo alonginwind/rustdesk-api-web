@@ -7,7 +7,6 @@ export function getToken () {
 }
 
 export function setToken (token) {
-  localStorage.setItem(`wc-option:local:access_token`, token)
   return localStorage.setItem(TokenKey, token)
 }
 
