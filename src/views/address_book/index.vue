@@ -2,22 +2,22 @@
   <div>
     <el-card class="list-query" shadow="hover">
       <el-form inline label-width="120px">
-        <!--     <el-form-item :label="T('Owner')">-->
-        <!--       <el-select v-model="listQuery.user_id" clearable @change="changeQueryUser">-->
-        <!--         <el-option-->
-        <!--             v-for="item in allUsers"-->
-        <!--             :key="item.id"-->
-        <!--             :label="item.username"-->
-        <!--             :value="item.id"-->
-        <!--         ></el-option>-->
-        <!--       </el-select>-->
-        <!--     </el-form-item>-->
-        <!--     <el-form-item :label="T('AddressBookName')">-->
-        <!--       <el-select v-model="listQuery.collection_id" clearable>-->
-        <!--         <el-option :value="0" :label="T('MyAddressBook')"></el-option>-->
-        <!--         <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>-->
-        <!--       </el-select>-->
-        <!--     </el-form-item>-->
+        <el-form-item :label="T('Owner')">
+          <el-select v-model="listQuery.user_id" clearable @change="changeQueryUser">
+            <el-option
+                v-for="item in allUsers"
+                :key="item.id"
+                :label="item.username"
+                :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="T('AddressBookName')">
+          <el-select v-model="listQuery.collection_id" clearable>
+            <el-option :value="0" :label="T('MyAddressBook')"></el-option>
+            <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item :label="T('Id')">
           <el-input v-model="listQuery.id" clearable></el-input>
         </el-form-item>
