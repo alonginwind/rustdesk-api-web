@@ -23,7 +23,7 @@
     <el-form-item :label="T('Username')" prop="username">
       <el-input v-model="ABFormData.username"></el-input>
     </el-form-item>
-    <el-form-item :label="T('Alias')" prop="alias">
+    <el-form-item :label="T('Alias')" prop="alias" required>
       <el-input v-model="ABFormData.alias"></el-input>
     </el-form-item>
     <el-form-item :label="T('Hostname')" prop="hostname">
@@ -102,6 +102,10 @@
   const ABSubmit = async () => {
     if (ABFormData.user_ids.length === 0) {
       ElMessage.error(T('ParamRequired', { param: T('Owner') }))
+      return
+    }
+    if (!ABFormData.alias) {
+      ElMessage.error(T('ParamRequired', { param: T('Alias')}))
       return
     }
     if (!ABFormData.id) {

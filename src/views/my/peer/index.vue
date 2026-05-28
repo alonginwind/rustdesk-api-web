@@ -117,7 +117,7 @@
         <el-form-item :label="T('Username')" prop="username">
           <el-input v-model="ABFormData.username"></el-input>
         </el-form-item>
-        <el-form-item :label="T('Alias')" prop="alias">
+        <el-form-item :label="T('Alias')" prop="alias" required>
           <el-input v-model="ABFormData.alias"></el-input>
         </el-form-item>
         <el-form-item :label="T('Hostname')" prop="hostname">
@@ -146,7 +146,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="ABFormVisible = false">{{ T('Cancel') }}</el-button>
-          <el-button @click="async () => { await ABSubmit(); getList() }" type="primary">{{ T('Submit') }}</el-button>
+          <el-button @click="submitABForm" type="primary">{{ T('Submit') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -381,6 +381,22 @@
       ElMessage.success(T('OperationSuccess'))
       batchABFormVisible.value = false
     }
+  }
+  const submitABForm = async () => {
+    if (ABFormData.collection_id == null || ABFormData.collection_id === 0) {
+      ElMessage.error(T('ParamRequired', { param: T('AddressBookName') }))
+      return
+    }
+    if (!ABFormData.alias) {
+      ElMessage.error(T('ParamRequired', { param: T('Alias') }))
+      return
+    }
+    if (!ABFormData.id) {
+      ElMessage.error(T('ParamRequired', { param: 'ID' }))
+      return
+    }
+    await ABSubmit()
+    getList()
   }
 
 
