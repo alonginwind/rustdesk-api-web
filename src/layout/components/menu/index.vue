@@ -24,11 +24,19 @@
     created () {
     },
     components: { MenuItem },
-    setup () {
+    props: {
+      forceCollapse: {
+        type: [Boolean, null],
+        default: null,
+      },
+    },
+    setup (props) {
       const routes = ref([])
       const route = useRoute()
       const app = useAppStore()
-      const isCollapse = computed(() => app.setting.sideIsCollapse)
+      const isCollapse = computed(() =>
+        props.forceCollapse !== null ? props.forceCollapse : app.setting.sideIsCollapse
+      )
       const activeIndex = computed(() => route.name)
 
       routes.value = useRouteStore().routes

@@ -15,7 +15,7 @@
           :with-header="false"
           class="mobile-drawer"
       >
-        <g-aside></g-aside>
+        <g-aside :force-collapse="false"></g-aside>
       </el-drawer>
       <el-container class="app-container ">
         <el-header class="app-header">
@@ -115,6 +115,33 @@
   align-items: center;
   color: #fff;
   flex-shrink: 0;
+}
+</style>
+
+<style lang="scss">
+/* Fix mobile drawer sidebar scrolling */
+.mobile-drawer {
+  .el-drawer__body {
+    padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-sidebar {
+    height: auto !important;
+    min-height: 100%;
+  }
+
+  .scroll-sidebar > .el-scrollbar__wrap {
+    height: auto !important;
+    overflow: visible;
+  }
+
+  .scroll-sidebar > .el-scrollbar__wrap > .el-scrollbar__view {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
 }
 </style>
 

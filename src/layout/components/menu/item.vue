@@ -5,7 +5,7 @@
   >
     <template #title>
       <el-icon v-if="route.meta?.icon">
-        <component :is="`el-icon-${route.meta.icon}`"></component>
+        <component :is="iconComponent(route.meta.icon)"></component>
       </el-icon>
       <span>{{ T(route.meta?.title) || T(route.name) }}</span>
     </template>
@@ -16,7 +16,7 @@
   </el-sub-menu>
   <el-menu-item v-else-if="!parseRoute(route).meta?.hide" :route="parseRoute(route)" :index="parseRoute(route).name">
     <el-icon v-if="parseRoute(route).meta?.icon">
-      <component :is="`el-icon-${parseRoute(route).meta.icon}`"></component>
+      <component :is="iconComponent(parseRoute(route).meta.icon)"></component>
     </el-icon>
     <span>{{ T(parseRoute(route).meta?.title) || T(parseRoute(route).name) }}</span>
   </el-menu-item>
@@ -42,8 +42,11 @@
           return route
         }
       }
+      // Use PascalCase component name for reliable resolution
+      const iconComponent = (name) => name ? `ElIcon${name}` : ''
       return {
         parseRoute,
+        iconComponent,
         T,
       }
     },
