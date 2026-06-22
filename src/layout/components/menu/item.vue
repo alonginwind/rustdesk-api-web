@@ -25,6 +25,7 @@
 <script>
   import { defineComponent } from 'vue'
   import { T } from '@/utils/i18n'
+  import * as ElementIcons from '@element-plus/icons'
 
   export default defineComponent({
     name: 'MenuItem',
@@ -42,8 +43,8 @@
           return route
         }
       }
-      // Use PascalCase component name for reliable resolution
-      const iconComponent = (name) => name ? `ElIcon${name}` : ''
+      // Return actual component object instead of string name
+      const iconComponent = (name) => name ? ElementIcons[name] : null
       return {
         parseRoute,
         iconComponent,

@@ -33,7 +33,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
-                     :pager-count="isMobile ? 3 : 7"
+                     :pager-count="isMobile ? 5 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
