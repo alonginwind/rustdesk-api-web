@@ -23,9 +23,15 @@
 </template>
 
 <script>
-  import { defineComponent } from 'vue'
+  import { defineComponent, markRaw } from 'vue'
   import { T } from '@/utils/i18n'
   import * as ElementIcons from '@element-plus/icons'
+
+  // Pre-resolve and markRaw all icons to prevent reactive proxy issues
+  const resolvedIcons = {}
+  for (const name in ElementIcons) {
+    resolvedIcons[name] = markRaw(ElementIcons[name])
+  }
 
   export default defineComponent({
     name: 'MenuItem',
@@ -43,8 +49,7 @@
           return route
         }
       }
-      // Return actual component object instead of string name
-      const iconComponent = (name) => name ? ElementIcons[name] : null
+      const iconComponent = (name) => name ? resolvedIcons[name] : null
       return {
         parseRoute,
         iconComponent,
