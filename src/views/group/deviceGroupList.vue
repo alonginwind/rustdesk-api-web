@@ -29,12 +29,13 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="!formData.id?T('Create'):T('Update')" width="800">
+    <el-dialog v-model="formVisible" :title="!formData.id?T('Create'):T('Update')" :width="isMobile ? '95%' : 800">
       <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
         <el-form-item :label="T('Name')" prop="name" required>
           <el-input v-model="formData.name"></el-input>
@@ -53,6 +54,8 @@
   import { list, create, update, detail, remove } from '@/api/device_group'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { T } from '@/utils/i18n'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const listRes = reactive({
     list: [], total: 0, loading: false,

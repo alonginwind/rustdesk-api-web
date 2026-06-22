@@ -30,12 +30,13 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="!formData.id?T('Create') :T('Update')" width="800">
+    <el-dialog v-model="formVisible" :title="!formData.id?T('Create') :T('Update')" :width="isMobile ? '95%' : 800">
       <el-form class="dialog-form" ref="form" :model="formData" :rules="rules" label-width="120px">
         <el-form-item label="Type" prop="oauth_type">
           <el-radio-group v-model="formData.oauth_type" :disabled="!!formData.id">
@@ -108,6 +109,8 @@
   import { handleClipboard } from '@/utils/clipboard'
   import { useAppStore } from '@/store/app'
   import { CopyDocument } from '@element-plus/icons'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const app = useAppStore()
 

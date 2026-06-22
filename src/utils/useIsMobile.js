@@ -1,20 +1,38 @@
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const BREAKPOINT = 1024
+const mediaQuery = typeof window !== 'undefined'
+  ? window.matchMedia(`(max-width: ${BREAKPOINT - 1}px)`)
+  : null
+
+// Singleton reactive state shared across all consumers
+const isMobile = ref(mediaQuery ? mediaQuery.matches : false)
+
+function handleChange(e) {
+  isMobile.value = e.matches
+}
+
+// Track consumer count to manage single listener lifecycle
+let consumers = 0
 
 export function useIsMobile() {
-  const width = ref(window.innerWidth)
-
-  const updateWidth = () => {
-    width.value = window.innerWidth
-  }
-
   onMounted(() => {
-    window.addEventListener('resize', updateWidth)
+    consumers++
+    if (consumers === 1 && mediaQuery) {
+      mediaQuery.addEventListener('change', handleChange)
+    }
+    // Sync in case media state changed while no consumers
+    if (mediaQuery) {
+      isMobile.value = mediaQuery.matches
+    }
   })
 
   onUnmounted(() => {
-    window.removeEventListener('resize', updateWidth)
+    consumers--
+    if (consumers === 0 && mediaQuery) {
+      mediaQuery.removeEventListener('change', handleChange)
+    }
   })
 
-  const isMobile = computed(() => width.value < 1024)
   return isMobile
 }

@@ -54,13 +54,15 @@
         <!--    <el-table-column prop="alias" :label="T('Alias')" align="center" width="80"/>-->
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
         <!--    <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>-->
-        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 200 : 500" class-name="table-actions" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 80 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
-            <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="!isMobile && appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
-            <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
-            <el-button @click="toView(row)">{{ T('View') }}</el-button>
-            <!--            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>-->
+            <MobileActions v-if="isMobile" :items="myPeerMobileActions(row)" @command="(cmd) => handleMyPeerAction(cmd, row)" />
+            <template v-else>
+              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+              <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
+              <el-button @click="toView(row)">{{ T('View') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -151,7 +153,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="batchABFormVisible" width="800" :title="T('Create')">
+    <el-dialog v-model="batchABFormVisible" :width="isMobile ? '95%' : 800" :title="T('Create')">
       <el-form class="dialog-form" ref="form" :model="batchABFormData" label-width="120px">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
           <el-select v-model="batchABFormData.collection_id" clearable @change="changeCollectionForBatchCreateAB">
@@ -193,9 +195,24 @@
   import { handleClipboard } from '@/utils/clipboard'
   import { batchCreateFromPeers } from '@/api/my/address_book'
   import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
   const isMobile = useIsMobile()
   const appStore = useAppStore()
+
+  // Mobile action items
+  const myPeerMobileActions = (row) => {
+    return [
+      { label: T('AddToAddressBook'), command: 'addToAB' },
+      { label: T('View'), command: 'view' },
+    ]
+  }
+  const handleMyPeerAction = (cmd, row) => {
+    switch (cmd) {
+      case 'addToAB': toAddressBook(row); break
+      case 'view': toView(row); break
+    }
+  }
   const listRes = reactive({
     list: [], total: 0, loading: false,
   })

@@ -28,36 +28,51 @@
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
           <el-button type="danger" @click="toAdd">{{ T('Add') }}</el-button>
-          <el-button type="success" @click="toExport">{{ T('Export') }}</el-button>
-          <el-popover :visible="showImport" placement="bottom" :width="600">
-            <el-upload
-                class="upload-demo"
-                drag
-                accept=".csv"
-                :before-upload="parseCsv"
-            >
-              <el-icon class="el-icon--upload">
-                <upload-filled/>
-              </el-icon>
-              <div class="el-upload__text">
-                {{ T('Drop file here or click to upload') }}
-              </div>
-              <template #tip>
-                <div class="el-upload__tip">
-                  {{ T('Please upload csv file') }} <br>
-                  {{ T('Columns') }}: <span style="font-weight: bold;font-size: 15px">id,cpu,hostname,memory,os,username,uuid,version,group_id</span>
-                  <br>
-                  <span>{{ T('You can reference export file') }}</span>
-                </div>
-              </template>
-            </el-upload>
-            <el-button @click="showImport=false" type="primary">{{ T('Cancel') }}</el-button>
-            <template #reference>
-              <el-button @click="showImport=true" type="danger" :icon="ArrowDown">{{ T('Import') }}</el-button>
+          <!-- Mobile: collapse extra actions into dropdown -->
+          <el-dropdown v-if="isMobile" trigger="click" @command="handleBatchCommand" style="margin-left: 5px">
+            <el-button>···<el-icon class="el-icon--right"><ArrowDown/></el-icon></el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="export">{{ T('Export') }}</el-dropdown-item>
+                <el-dropdown-item command="import">{{ T('Import') }}</el-dropdown-item>
+                <el-dropdown-item command="batchDelete" divided>{{ T('BatchDelete') }}</el-dropdown-item>
+                <el-dropdown-item command="batchAddToAB">{{ T('BatchAddToAB') }}</el-dropdown-item>
+              </el-dropdown-menu>
             </template>
-          </el-popover>
-          <el-button type="danger" @click="toBatchDelete">{{ T('BatchDelete') }}</el-button>
-          <el-button type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>
+          </el-dropdown>
+          <!-- Desktop: show all buttons -->
+          <template v-else>
+            <el-button type="success" @click="toExport">{{ T('Export') }}</el-button>
+            <el-popover :visible="showImport" placement="bottom" :width="600">
+              <el-upload
+                  class="upload-demo"
+                  drag
+                  accept=".csv"
+                  :before-upload="parseCsv"
+              >
+                <el-icon class="el-icon--upload">
+                  <upload-filled/>
+                </el-icon>
+                <div class="el-upload__text">
+                  {{ T('Drop file here or click to upload') }}
+                </div>
+                <template #tip>
+                  <div class="el-upload__tip">
+                    {{ T('Please upload csv file') }} <br>
+                    {{ T('Columns') }}: <span style="font-weight: bold;font-size: 15px">id,cpu,hostname,memory,os,username,uuid,version,group_id</span>
+                    <br>
+                    <span>{{ T('You can reference export file') }}</span>
+                  </div>
+                </template>
+              </el-upload>
+              <el-button @click="showImport=false" type="primary">{{ T('Cancel') }}</el-button>
+              <template #reference>
+                <el-button @click="showImport=true" type="danger" :icon="ArrowDown">{{ T('Import') }}</el-button>
+              </template>
+            </el-popover>
+            <el-button type="danger" @click="toBatchDelete">{{ T('BatchDelete') }}</el-button>
+            <el-button type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>
+          </template>
         </el-form-item>
       </el-form>
     </el-card>
@@ -74,9 +89,9 @@
               <span>{{ row.id }} <el-icon @click="handleClipboard(row.id, $event)"><CopyDocument/></el-icon></span>
             </template>
           </el-table-column>
-          <el-table-column v-if="c.name==='cpu'" prop="cpu" label="CPU" align="center" width="80" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='cpu' && !isMobile" prop="cpu" label="CPU" align="center" width="80" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='hostname'" prop="hostname" :label="T('Hostname')" align="center" width="120" show-overflow-tooltip/>
-          <el-table-column v-if="c.name==='memory'" prop="memory" :label="T('Memory')" align="center" width="80"/>
+          <el-table-column v-if="c.name==='memory' && !isMobile" prop="memory" :label="T('Memory')" align="center" width="80"/>
           <el-table-column v-if="c.name==='os'" prop="os" :label="T('Os')" align="center" width="120" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='last_online_time'" prop="last_online_time" :label="T('LastOnlineTime')" align="center" min-width="120">
             <template #default="{row}">
@@ -93,20 +108,23 @@
               <span v-else> - </span>
             </template>
           </el-table-column>
-          <el-table-column v-if="c.name==='uuid'" prop="uuid" :label="T('Uuid')" align="center" width="100" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='uuid' && !isMobile" prop="uuid" :label="T('Uuid')" align="center" width="100" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='version'" prop="version" :label="T('Version')" align="center" width="80"/>
           <el-table-column v-if="c.name==='alias'" prop="alias" :label="T('Alias')" align="center" width="240" show-overflow-tooltip/>
-          <el-table-column v-if="c.name==='created_at'" prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
-          <el-table-column v-if="c.name==='updated_at'" prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
+          <el-table-column v-if="c.name==='created_at' && !isMobile" prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
+          <el-table-column v-if="c.name==='updated_at' && !isMobile" prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
         </template>
 
-        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 200 : 500" class-name="table-actions" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 80 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
-            <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="!isMobile && appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
-            <el-button v-if="!isMobile" type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="peerMobileActions(row)" @command="(cmd) => handlePeerAction(cmd, row)" />
+            <template v-else>
+              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+              <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -121,8 +139,8 @@
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" :title="!formData.row_id?T('Create'):T('Update')" :width="isMobile ? 500 : 800">
-      <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
+    <el-dialog v-model="formVisible" :title="!formData.row_id?T('Create'):T('Update')" :width="isMobile ? '95%' : 800">
+      <el-form class="dialog-form" ref="form" :model="formData" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item label="ID" prop="id" required>
           <el-input v-model="formData.id"></el-input>
         </el-form-item>
@@ -167,12 +185,12 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="ABFormVisible" width="800" :title="T('Create')" destroy-on-close>
+    <el-dialog v-model="ABFormVisible" :width="isMobile ? '95%' : 800" :title="T('Create')" destroy-on-close>
       <createABForm :peer="clickRow" @success="ABFormVisible=false; getList()" @cancel="ABFormVisible=false"></createABForm>
     </el-dialog>
 
-    <el-dialog v-model="batchABFormVisible" width="800" :title="T('Create')">
-      <el-form class="dialog-form" ref="form" :model="batchABFormData" label-width="120px">
+    <el-dialog v-model="batchABFormVisible" :width="isMobile ? '95%' : 800" :title="T('Create')">
+      <el-form class="dialog-form" ref="form" :model="batchABFormData" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item :label="T('Owner')" prop="user_id" required>
           <el-select v-model="batchABFormData.user_id" @change="changeUserForBatchCreateAB">
             <el-option
@@ -249,9 +267,45 @@
   import createABForm from '@/views/peer/createABForm.vue'
   import { UploadFilled } from '@element-plus/icons-vue'
   import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
   const isMobile = useIsMobile()
   const appStore = useAppStore()
+
+  // Mobile action items
+  const peerMobileActions = (row) => {
+    const items = [
+      { label: T('Link'), command: 'link' },
+    ]
+    if (appStore.setting.appConfig.web_client) {
+      items.push({ label: 'Web Client', command: 'webClient' })
+    }
+    items.push(
+      { label: T('AddToAddressBook'), command: 'addToAB' },
+      { label: T('Edit'), command: 'edit' },
+      { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+    )
+    return items
+  }
+  const handlePeerAction = (cmd, row) => {
+    switch (cmd) {
+      case 'link': connectByClient(row.id); break
+      case 'webClient': toWebClientLink(row); break
+      case 'addToAB': toAddressBook(row); break
+      case 'edit': toEdit(row); break
+      case 'delete': del(row); break
+    }
+  }
+
+  // Mobile batch command handler
+  const handleBatchCommand = (cmd) => {
+    switch (cmd) {
+      case 'export': toExport(); break
+      case 'import': showImport.value = true; break
+      case 'batchDelete': toBatchDelete(); break
+      case 'batchAddToAB': toBatchAddToAB(); break
+    }
+  }
 
   //group
   const groupListRes = reactive({
@@ -539,12 +593,12 @@
     { name: 'last_online_time', visible: true, label: 'LastOnlineTime' },
     { name: 'last_online_ip', visible: true, label: 'LastOnlineIp' },
     { name: 'username', visible: true, label: 'Username' },
-    { name: 'group_id', visible: false, label: 'Group' },
-    { name: 'uuid', visible: false, label: 'Uuid' },
+    { name: 'group_id', visible: true, label: 'Group' },
+    { name: 'uuid', visible: true, label: 'Uuid' },
     { name: 'version', visible: true, label: 'Version' },
     { name: 'alias', visible: true, label: 'Alias' },
     { name: 'created_at', visible: true, label: 'CreatedAt' },
-    { name: 'updated_at', visible: false, label: 'UpdatedAt' },
+    { name: 'updated_at', visible: true, label: 'UpdatedAt' },
   ])
   const visibleColumns = ref(JSON.parse(localStorage.getItem('peer_visible_columns')) || allColumns.value)
   const showColumnSetting = () => {

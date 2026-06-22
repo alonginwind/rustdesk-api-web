@@ -49,6 +49,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -62,6 +63,8 @@
   import { loadAllUsers } from '@/global'
   import { useRepositories } from '@/views/user/token.js'
   import { T } from '@/utils/i18n'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const { allUsers, getAllUsers } = loadAllUsers()
   getAllUsers()

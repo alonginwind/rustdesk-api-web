@@ -75,6 +75,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -101,6 +102,8 @@
   import { T } from '@/utils/i18n'
   import { sizeFormat } from '@/utils/file'
   import { Right } from '@element-plus/icons'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const showDirFileNum = 3
   const {

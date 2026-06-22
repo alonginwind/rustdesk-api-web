@@ -1,13 +1,13 @@
 <template>
-  <el-icon class="ex-icon" @click="expandOrFoldSlider">
+  <el-icon v-if="!isMobile" class="ex-icon" @click="expandOrFoldSlider">
     <el-icon-expand v-if="setting.sideIsCollapse"></el-icon-expand>
     <el-icon-fold v-else></el-icon-fold>
   </el-icon>
   <div class="header-logo">
     <img :src="setting.logo" alt="" class="logo">
-    <div class="title">{{setting.title}}</div>
+    <div v-if="!isMobile" class="title">{{setting.title}}</div>
   </div>
-  <Setting></Setting>
+  <Setting :isMobile="isMobile"></Setting>
 </template>
 
 <script>
@@ -16,6 +16,7 @@
   import Setting from '@/layout/components/setting/index.vue'
   import { useAppStore } from '@/store/app'
   import GTags from '@/layout/components/tags/index.vue'
+  import { useIsMobile } from '@/utils/useIsMobile'
 
   export default defineComponent({
     name: 'LayerHeader',
@@ -26,11 +27,13 @@
     setup (props) {
       const appStore = useAppStore()
       const setting = computed(() => appStore.setting)
+      const isMobile = useIsMobile()
       const expandOrFoldSlider = () => {
         appStore.sideCollapse()
       }
       return {
         setting,
+        isMobile,
         expandOrFoldSlider,
       }
     },
@@ -52,16 +55,19 @@
     display: flex;
     height: 100%;
     align-items: center;
+    overflow: hidden;
 
     .title {
       display: block;
       margin-left: 10px;
+      white-space: nowrap;
     }
 
     .logo {
       display: block;
       width: 30px;
       height: 30px;
+      flex-shrink: 0;
     }
   }
 

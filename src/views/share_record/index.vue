@@ -45,6 +45,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -60,6 +61,8 @@
   import { remove, list, batchDelete } from '@/api/share_record'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { useRepositories } from '@/views/share_record/index'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const { allUsers, getAllUsers } = loadAllUsers()
   getAllUsers()

@@ -76,8 +76,15 @@
 .tag {
   border-radius: 0;
   cursor: pointer;
+  flex-shrink: 0;
 
   &.active {
+  }
+}
+
+@media (max-width: 1024px) {
+  .tag {
+    font-size: 12px;
   }
 }
 </style>

@@ -49,3 +49,134 @@ html.dark {
   --tag-bg-color: #24252b;
   --basicBlack: #fff;
 }
+
+/* Mobile responsive styles */
+@media (max-width: 1024px) {
+  // Query form: stack vertically, full width inputs
+  .list-query {
+    .el-form--inline {
+      .el-form-item {
+        display: flex;
+        margin-right: 0;
+        margin-bottom: 8px;
+        width: 100%;
+
+        .el-form-item__label {
+          width: 80px !important;
+          flex-shrink: 0;
+        }
+
+        .el-form-item__content {
+          flex: 1;
+        }
+      }
+    }
+
+    .el-select {
+      --el-select-width: 100%;
+    }
+
+    .el-input {
+      --el-input-width: 100%;
+    }
+  }
+
+  // Dialog form
+  .dialog-form {
+    max-width: 100%;
+    margin: 10px auto;
+
+    .el-form-item {
+      margin-bottom: 14px;
+    }
+  }
+
+  // Dialog width override
+  .el-dialog {
+    --el-dialog-width: 92%;
+    margin-top: 5vh;
+  }
+
+  // Popover width
+  .el-popover {
+    max-width: 90vw;
+  }
+
+  // Table actions buttons
+  .table-actions {
+    .el-button {
+      margin: 2px;
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+  }
+
+  // Dropdown menu (teleported to body)
+  .el-dropdown-menu {
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .el-dropdown-menu__item {
+      padding: 8px 16px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  }
+
+  // Pagination center + hide sizes/jumper on mobile
+  .list-page {
+    .el-pagination {
+      justify-content: center;
+
+      .el-pagination__sizes,
+      .el-pagination__jump {
+        display: none;
+      }
+    }
+  }
+
+  // Card body padding
+  .el-card__body {
+    padding: 10px;
+  }
+
+  // Main content padding
+  .app-main {
+    --el-main-padding: 10px;
+  }
+
+  // Info form
+  .info-form {
+    width: 100% !important;
+  }
+
+  // Upload popover
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      padding: 10px;
+    }
+  }
+
+  // Dialog form label compact
+  .dialog-form {
+    .el-form-item__label {
+      font-size: 13px;
+    }
+  }
+
+  // Table compact on mobile
+  .el-table {
+    font-size: 12px;
+
+    th.el-table__cell,
+    td.el-table__cell {
+      padding: 4px 0;
+    }
+
+    .el-checkbox {
+      margin-right: 0;
+    }
+  }
+}

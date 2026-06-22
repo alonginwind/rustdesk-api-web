@@ -101,12 +101,14 @@
 }
 
 .login-card {
-  width: 360px;
+  max-width: 360px;
+  width: 100%;
   background-color: #283342;
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -136,6 +138,16 @@ h1 {
   height: 80px;
   margin: 0 auto 20px;
   display: block;
+}
+
+@media (max-width: 1024px) {
+  .login-card {
+    padding: 20px;
+  }
+
+  .login-container {
+    padding: 10px;
+  }
 }
 
 .el-form-item {

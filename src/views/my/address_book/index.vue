@@ -20,7 +20,15 @@
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
           <el-button type="danger" @click="toAdd">{{ T('Add') }}</el-button>
-          <el-button type="primary" @click="showBatchEditTags">{{ T('BatchEditTags') }}</el-button>
+          <el-button v-if="!isMobile" type="primary" @click="showBatchEditTags">{{ T('BatchEditTags') }}</el-button>
+          <el-dropdown v-if="isMobile" trigger="click" @command="handleAbBatchCommand" style="margin-left: 5px">
+            <el-button>···<el-icon class="el-icon--right"><ArrowDown/></el-icon></el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="batchEditTags">{{ T('BatchEditTags') }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </el-form-item>
       </el-form>
     </el-card>
@@ -47,19 +55,22 @@
         <el-table-column prop="username" :label="T('Username')" align="center" width="150"/>
         <el-table-column prop="hostname" :label="T('Hostname')" align="center" width="150"/>
         <!--        <el-table-column prop="platform" :label="T('Platform')" align="center" width="120"/>-->
-        <el-table-column prop="tags" :label="T('Tags')" align="center"/>
+        <el-table-column v-if="!isMobile" prop="tags" :label="T('Tags')" align="center"/>
         <!--        <el-table-column prop="created_at" label="创建时间" align="center"/>-->
         <!--        <el-table-column prop="updated_at" label="更新时间" align="center"/>-->
         <el-table-column prop="alias" :label="T('Alias')" align="center" width="150"/>
         <el-table-column prop="peer.version" :label="T('Version')" align="center" width="100"/>
-        <el-table-column prop="hash" :label="T('Hash')" align="center" width="150" show-overflow-tooltip/>
-        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" width="600" fixed="right">
+        <el-table-column v-if="!isMobile" prop="hash" :label="T('Hash')" align="center" width="150" show-overflow-tooltip/>
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 80 : 600" fixed="right">
           <template #default="{row}">
-            <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
-            <el-button v-if="appStore.setting.appConfig.web_client" type="primary" @click="toShowShare(row)">{{ T('ShareByWebClient') }}</el-button>
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="myAbMobileActions(row)" @command="(cmd) => handleMyAbAction(cmd, row)" />
+            <template v-else>
+              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+              <el-button v-if="appStore.setting.appConfig.web_client" type="primary" @click="toShowShare(row)">{{ T('ShareByWebClient') }}</el-button>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -68,13 +79,14 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
       </el-pagination>
     </el-card>
-    <el-dialog v-model="formVisible" width="800" :title="!formData.row_id?T('Create') :T('Update') ">
-      <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
+    <el-dialog v-model="formVisible" :width="isMobile ? '95%' : 800" :title="!formData.row_id?T('Create') :T('Update') ">
+      <el-form class="dialog-form" ref="form" :model="formData" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
           <el-select v-model="formData.collection_id" clearable @change="changeCollectionForUpdate">
             <el-option :value="0" :label="T('MyAddressBook')"></el-option>
@@ -146,14 +158,14 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog v-model="shareToWebClientVisible" width="900" :close-on-click-modal="false">
+    <el-dialog v-model="shareToWebClientVisible" :width="isMobile ? '95%' : 900" :close-on-click-modal="false">
       <shareByWebClient :id="shareToWebClientForm.id"
                         :hash="shareToWebClientForm.hash"
                         @cancel="shareToWebClientVisible=false"
                         @success=""/>
     </el-dialog>
-    <el-dialog v-model="batchEditTagVisible" width="800">
-      <el-form :model="batchEditTagsFormData" label-width="120px" class="dialog-form">
+    <el-dialog v-model="batchEditTagVisible" :width="isMobile ? '95%' : 800">
+      <el-form :model="batchEditTagsFormData" :label-width="isMobile ? '80px' : '120px'" class="dialog-form">
         <el-form-item :label="T('Tags')" prop="tags">
           <el-select v-model="batchEditTagsFormData.tags" multiple>
             <el-option
@@ -182,10 +194,43 @@
   import { useAppStore } from '@/store/app'
   import { connectByClient } from '@/utils/peer'
   import { handleClipboard } from '@/utils/clipboard'
-  import { CopyDocument } from '@element-plus/icons'
+  import { CopyDocument, ArrowDown } from '@element-plus/icons'
   import PlatformIcons from '@/components/icons/platform.vue'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
+  const isMobile = useIsMobile()
   const appStore = useAppStore()
+
+  // Mobile action items
+  const myAbMobileActions = (row) => {
+    const items = [
+      { label: T('Link'), command: 'link' },
+    ]
+    if (appStore.setting.appConfig.web_client) {
+      items.push({ label: 'Web Client', command: 'webClient' })
+      items.push({ label: T('ShareByWebClient'), command: 'share' })
+    }
+    items.push(
+      { label: T('Edit'), command: 'edit' },
+      { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+    )
+    return items
+  }
+  const handleMyAbAction = (cmd, row) => {
+    switch (cmd) {
+      case 'link': connectByClient(row.id); break
+      case 'webClient': toWebClientLink(row); break
+      case 'share': toShowShare(row); break
+      case 'edit': toEdit(row); break
+      case 'delete': del(row); break
+    }
+  }
+
+  // Mobile batch command handler
+  const handleAbBatchCommand = (cmd) => {
+    if (cmd === 'batchEditTags') showBatchEditTags()
+  }
   const {
     listRes,
     listQuery,

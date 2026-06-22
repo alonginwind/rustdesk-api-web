@@ -66,13 +66,15 @@
         <el-table-column prop="alias" :label="T('Alias')" align="center" width="250" show-overflow-tooltip/>
         <el-table-column prop="peer.version" :label="T('Version')" align="center" width="100"/>
         <el-table-column prop="hash" :label="T('Hash')" align="center" width="150" show-overflow-tooltip/>
-        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 200 : 500" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 80 : 500" fixed="right">
           <template #default="{row}">
-            <el-button v-if="!isMobile" type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
-            <el-button v-if="!isMobile && appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
-            <!--            <el-button type="primary" @click="toShowShare(row)">{{ T('ShareByWebClient') }}</el-button>-->
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="abMobileActions(row)" @command="(cmd) => handleAbAction(cmd, row)" />
+            <template v-else>
+              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -191,11 +193,35 @@
   import PlatformIcons from '@/components/icons/platform.vue'
   import { loadAllUsers } from '@/global'
   import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
   const isMobile = useIsMobile()
   const appStore = useAppStore()
   const route = useRoute()
   const { allUsers, getAllUsers } = loadAllUsers()
+
+  // Mobile action items
+  const abMobileActions = (row) => {
+    const items = [
+      { label: T('Link'), command: 'link' },
+    ]
+    if (appStore.setting.appConfig.web_client) {
+      items.push({ label: 'Web Client', command: 'webClient' })
+    }
+    items.push(
+      { label: T('Edit'), command: 'edit' },
+      { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+    )
+    return items
+  }
+  const handleAbAction = (cmd, row) => {
+    switch (cmd) {
+      case 'link': connectByClient(row.id); break
+      case 'webClient': toWebClientLink(row); break
+      case 'edit': toEdit(row); break
+      case 'delete': del(row); break
+    }
+  }
 
   const {
     listRes,

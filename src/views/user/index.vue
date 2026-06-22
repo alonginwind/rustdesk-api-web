@@ -16,7 +16,7 @@
       <el-table :data="listRes.list" v-loading="listRes.loading" border>
         <el-table-column prop="id" label="ID" align="center"></el-table-column>
         <el-table-column prop="username" :label="T('Username')" align="center"/>
-        <el-table-column prop="email" :label="T('Email')" align="center"/>
+        <el-table-column v-if="!isMobile" prop="email" :label="T('Email')" align="center"/>
         <el-table-column prop="nickname" :label="T('Nickname')" align="center"/>
         <el-table-column :label="T('Group')" align="center">
           <template #default="{row}">
@@ -33,16 +33,19 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" :label="T('Remark')" align="center"/>
+        <el-table-column v-if="!isMobile" prop="remark" :label="T('Remark')" align="center"/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
-        <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center"/>
-        <el-table-column :label="T('Actions')" align="center" width="650">
+        <el-table-column v-if="!isMobile" prop="updated_at" :label="T('UpdatedAt')" align="center"/>
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 80 : 650" class-name="table-actions">
           <template #default="{row}">
-            <el-button @click="toTag(row)">{{ T('UserTags') }}</el-button>
-            <el-button @click="toAddressBook(row)">{{ T('UserAddressBook') }}</el-button>
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="warning" @click="changePass(row)">{{ T('ResetPassword') }}</el-button>
-            <el-button type="danger" @click="remove(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="userMobileActions" @command="(cmd) => handleUserAction(cmd, row)" />
+            <template v-else>
+              <el-button @click="toTag(row)">{{ T('UserTags') }}</el-button>
+              <el-button @click="toAddressBook(row)">{{ T('UserAddressBook') }}</el-button>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="warning" @click="changePass(row)">{{ T('ResetPassword') }}</el-button>
+              <el-button type="danger" @click="remove(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -51,6 +54,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -66,6 +70,27 @@
   import { update } from '@/api/user'
   import { ElMessageBox, ElMessage } from 'element-plus'
   import { onMounted, watch } from 'vue'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
+  const isMobile = useIsMobile()
+
+  // Mobile action items
+  const userMobileActions = [
+    { label: T('UserTags'), command: 'tag' },
+    { label: T('UserAddressBook'), command: 'addressBook' },
+    { label: T('Edit'), command: 'edit' },
+    { label: T('ResetPassword'), command: 'resetPass' },
+    { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+  ]
+  const handleUserAction = (cmd, row) => {
+    switch (cmd) {
+      case 'tag': toTag(row); break
+      case 'addressBook': toAddressBook(row); break
+      case 'edit': toEdit(row); break
+      case 'resetPass': changePass(row); break
+      case 'delete': remove(row); break
+    }
+  }
   //列表
   const {
     listRes,

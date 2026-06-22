@@ -35,7 +35,7 @@
     <el-dropdown class="menu-item">
       <div class="title">
         <!--        <el-image class="avatar" :src="user.avatar"></el-image>-->
-        <span class="nickname">{{ user.username }}</span>
+        <span v-if="!isMobile" class="nickname">{{ user.username }}</span>
         <el-icon>
           <el-icon-arrow-down/>
         </el-icon>
@@ -61,6 +61,13 @@
   import { T } from '@/utils/i18n'
   import { useDark } from '@vueuse/core'
   import { Sunny, Moon } from '@element-plus/icons'
+
+  const props = defineProps({
+    isMobile: {
+      type: Boolean,
+      default: false,
+    },
+  })
 
   const userStore = useUserStore()
   const user = userStore
@@ -106,6 +113,14 @@
 
     .nickname {
       padding: 0 10px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .setting {
+    .menu-item {
+      margin-left: 8px;
     }
   }
 }

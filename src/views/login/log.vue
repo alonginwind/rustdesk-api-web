@@ -39,7 +39,7 @@
         <el-table-column prop="type" label="type" align="center" width="100"/>
         <el-table-column prop="platform" label="Platform/UA" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
-        <el-table-column :label="T('Actions')" align="center" width="400">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 100 : 400" class-name="table-actions">
           <template #default="{row}">
             <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
           </template>
@@ -50,6 +50,7 @@
       <el-pagination background
                      layout="prev, pager, next, sizes, jumper"
                      :page-sizes="[10,20,50,100]"
+                     :pager-count="isMobile ? 3 : 7"
                      v-model:page-size="listQuery.page_size"
                      v-model:current-page="listQuery.page"
                      :total="listRes.total">
@@ -65,6 +66,8 @@
   import { T } from '@/utils/i18n'
   import { list } from '@/api/peer'
   import { downBlob, jsonToCsv } from '@/utils/file'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  const isMobile = useIsMobile()
 
   const { allUsers, getAllUsers } = loadAllUsers()
   getAllUsers()
