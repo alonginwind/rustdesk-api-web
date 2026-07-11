@@ -18,7 +18,7 @@
             <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="T('Id')">
+        <el-form-item label="ID">
           <el-input v-model="listQuery.id" clearable></el-input>
         </el-form-item>
         <!--     <el-form-item :label="T('Username')">-->

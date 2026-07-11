@@ -22,6 +22,7 @@ export function useRepositories (api_type = 'my') {
     page_size: 10,
     is_my: 0,
     user_id: null,
+    device_id: null,
   })
 
   const getList = async () => {

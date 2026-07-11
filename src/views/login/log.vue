@@ -12,6 +12,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item :label="T('Device')">
+          <el-input v-model="listQuery.device_id" clearable></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
           <el-button type="danger" @click="toBatchDelete">{{ T('BatchDelete') }}</el-button>

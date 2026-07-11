@@ -400,7 +400,7 @@
     }
   }
   const submitABForm = async () => {
-    if (ABFormData.collection_id == null || ABFormData.collection_id === 0) {
+    if (!ABFormData.collection_id) {
       ElMessage.error(T('ParamRequired', { param: T('AddressBookName') }))
       return
     }
