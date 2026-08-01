@@ -389,6 +389,9 @@
   "AddressBookName": {
     "One": "주소록 이름"
   },
+  "AddressBookCollection": {
+    "One": "주소록 모음"
+  },
   "AddRule": {
     "One": "규칙 추가"
   },
@@ -425,14 +428,26 @@
   "LastOnlineIp": {
     "One": "마지막 온라인 IP"
   },
+  "or login in with": {
+    "One": "또는 다음으로 로그인"
+  },
+  "Optional, default is": {
+    "One": "선택 사항, 기본값:"
+  },
+  "Check your IdP docs, without": {
+    "One": "IdP 문서를 확인하세요, 제외:"
+  },
+  "For OIDC login without a password, enter any 4-20 letters": {
+    "One": "비밀번호 없이 OIDC 로그인의 경우 4-20자의 문자를 입력하세요"
+  },
   "OldPassword": {
     "One": "이전 비밀번호"
   },
-  "NewPasswordEqualOldPassword": {
-    "One": "새 비밀번호는 이전 비밀번호와 같을 수 없습니다"
-  },
   "NewPassword": {
     "One": "새 비밀번호"
+  },
+  "NewPasswordEqualOldPassword": {
+    "One": "새 비밀번호는 이전 비밀번호와 같을 수 없습니다"
   },
   "ConfirmPassword": {
     "One": "비밀번호 확인"
@@ -446,8 +461,17 @@
   "UserToken": {
     "One": "사용자 토큰"
   },
+  "Email": {
+    "One": "이메일"
+  },
   "MyPeer": {
     "One": "내 피어"
+  },
+  "View": {
+    "One": "보기"
+  },
+  "Information": {
+    "One": "정보"
   },
   "BatchAddToAB": {
     "One": "주소록에 일괄 추가"
@@ -503,6 +527,12 @@
   "Result": {
     "One": "결과"
   },
+  "DeviceGroupManage": {
+    "One": "기기 그룹 관리"
+  },
+  "Import": {
+    "One": "가져오기"
+  },
   "Drop file here or click to upload": {
     "One": "여기에 파일을 드롭하거나 클릭하여 업로드하십시오"
   },
@@ -517,5 +547,29 @@
   },
   "Remark": {
     "One": "비고"
+  },
+  "PeerStrategy": {
+    "One": "전략"
+  },
+  "DefaultStrategy": {
+    "One": "기본 전략"
+  },
+  "ConfigOptions": {
+    "One": "구성 옵션"
+  },
+  "ModifiedAt": {
+    "One": "수정 시간"
+  },
+  "OptionKey": {
+    "One": "옵션 키"
+  },
+  "OptionValue": {
+    "One": "옵션 값"
+  },
+  "AddOption": {
+    "One": "옵션 추가"
+  },
+  "Token": {
+    "One": "토큰"
   }
 }

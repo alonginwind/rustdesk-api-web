@@ -403,6 +403,9 @@
   "AddressBookName": {
     "One": "Address Book Name"
   },
+  "AddressBookCollection": {
+    "One": "Address Book Collection"
+  },
   "AddRule": {
     "One": "Add Rule"
   },
@@ -439,14 +442,26 @@
   "LastOnlineIp": {
     "One": "Last Online Ip"
   },
+  "or login in with": {
+    "One": "or login in with"
+  },
+  "Optional, default is": {
+    "One": "Optional, default is"
+  },
+  "Check your IdP docs, without": {
+    "One": "Check your IdP docs, without"
+  },
+  "For OIDC login without a password, enter any 4-20 letters": {
+    "One": "For OIDC login without a password, enter any 4-20 letters"
+  },
   "OldPassword": {
     "One": "Old Password"
   },
-  "NewPasswordEqualOldPassword": {
-    "One": "New Password cannot be the same as Old Password"
-  },
   "NewPassword": {
     "One": "New Password"
+  },
+  "NewPasswordEqualOldPassword": {
+    "One": "New Password cannot be the same as Old Password"
   },
   "ConfirmPassword": {
     "One": "Confirm Password"
@@ -459,6 +474,18 @@
   },
   "UserToken": {
     "One": "User Token"
+  },
+  "Email": {
+    "One": "Email"
+  },
+  "MyPeer": {
+    "One": "My Peer"
+  },
+  "View": {
+    "One": "View"
+  },
+  "Information": {
+    "One": "Information"
   },
   "BatchAddToAB": {
     "One": "Batch Add To Address Book"
@@ -517,6 +544,9 @@
   "DeviceGroupManage": {
     "One": "Device Group Manage"
   },
+  "Import": {
+    "One": "Import"
+  },
   "Drop file here or click to upload": {
     "One": "Drop file here or click to upload"
   },
@@ -531,5 +561,29 @@
   },
   "Remark": {
     "One": "Remark"
+  },
+  "PeerStrategy": {
+    "One": "Strategy"
+  },
+  "DefaultStrategy": {
+    "One": "Default Strategy"
+  },
+  "ConfigOptions": {
+    "One": "Config Options"
+  },
+  "ModifiedAt": {
+    "One": "Modified At"
+  },
+  "OptionKey": {
+    "One": "Option Key"
+  },
+  "OptionValue": {
+    "One": "Option Value"
+  },
+  "AddOption": {
+    "One": "Add Option"
+  },
+  "Token": {
+    "One": "Token"
   }
 }

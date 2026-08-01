@@ -547,5 +547,29 @@
   },
   "Remark": {
     "One": "备注"
+  },
+  "PeerStrategy": {
+    "One": "策略配置"
+  },
+  "DefaultStrategy": {
+    "One": "默认策略"
+  },
+  "ConfigOptions": {
+    "One": "配置选项"
+  },
+  "ModifiedAt": {
+    "One": "修改时间"
+  },
+  "OptionKey": {
+    "One": "选项键"
+  },
+  "OptionValue": {
+    "One": "选项值"
+  },
+  "AddOption": {
+    "One": "添加选项"
+  },
+  "Token": {
+    "One": "令牌"
   }
 }

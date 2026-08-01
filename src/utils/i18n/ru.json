@@ -403,6 +403,9 @@
   "AddressBookName": {
     "One": "Имя адресной книги"
   },
+  "AddressBookCollection": {
+    "One": "Коллекция адресной книги"
+  },
   "AddRule": {
     "One": "Добавить правило"
   },
@@ -439,14 +442,26 @@
   "LastOnlineIp": {
     "One": "Последний IP онлайн"
   },
+  "or login in with": {
+    "One": "или войдите с помощью"
+  },
+  "Optional, default is": {
+    "One": "Необязательно, по умолчанию"
+  },
+  "Check your IdP docs, without": {
+    "One": "Проверьте документацию вашего IdP, без"
+  },
+  "For OIDC login without a password, enter any 4-20 letters": {
+    "One": "Для входа через OIDC без пароля введите любые 4-20 букв"
+  },
   "OldPassword": {
     "One": "Старый пароль"
   },
-  "NewPasswordEqualOldPassword": {
-    "One": "Новый пароль совпадает со старым паролем"
-  },
   "NewPassword": {
     "One": "Новый пароль"
+  },
+  "NewPasswordEqualOldPassword": {
+    "One": "Новый пароль совпадает со старым паролем"
   },
   "ConfirmPassword": {
     "One": "Подтвердите пароль"
@@ -460,8 +475,17 @@
   "UserToken": {
     "One": "Токен пользователя"
   },
+  "Email": {
+    "One": "Электронная почта"
+  },
   "MyPeer": {
     "One": "Мои партнеры"
+  },
+  "View": {
+    "One": "Просмотр"
+  },
+  "Information": {
+    "One": "Информация"
   },
   "BatchAddToAB": {
     "One": "Пакетное добавление в адресную книгу"
@@ -520,6 +544,9 @@
   "DeviceGroupManage": {
     "One": "Группы устройств"
   },
+  "Import": {
+    "One": "Импорт"
+  },
   "Drop file here or click to upload": {
     "One": "Перетащите файл сюда или нажмите, чтобы загрузить"
   },
@@ -534,6 +561,29 @@
   },
   "Remark": {
     "One": "Примечание"
+  },
+  "PeerStrategy": {
+    "One": "Стратегия"
+  },
+  "DefaultStrategy": {
+    "One": "Стратегия по умолчанию"
+  },
+  "ConfigOptions": {
+    "One": "Параметры конфигурации"
+  },
+  "ModifiedAt": {
+    "One": "Изменено"
+  },
+  "OptionKey": {
+    "One": "Ключ"
+  },
+  "OptionValue": {
+    "One": "Значение"
+  },
+  "AddOption": {
+    "One": "Добавить параметр"
+  },
+  "Token": {
+    "One": "Токен"
   }
 }
-

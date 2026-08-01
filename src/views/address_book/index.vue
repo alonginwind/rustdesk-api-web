@@ -72,6 +72,7 @@
             <template v-else>
               <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
               <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
+              <el-button type="warning" @click="toStrategy(row)">{{ T('PeerStrategy') }}</el-button>
               <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
               <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
             </template>
@@ -177,11 +178,39 @@
                             @cancel="shareToWebClientVisible=false"
                             @success=""/>
         </el-dialog>-->
+
+    <!-- 策略配置对话框 -->
+    <el-dialog v-model="strategyDialogVisible" :title="T('PeerStrategy')" :width="isMobile ? '95%' : 600">
+      <el-form class="dialog-form" :label-width="isMobile ? '80px' : '120px'">
+        <el-form-item label="ID">
+          <el-input :model-value="strategyForm.peer_id" disabled />
+        </el-form-item>
+
+        <el-divider content-position="left">{{ T('ConfigOptions') }}</el-divider>
+
+        <div v-for="(item, index) in strategyConfigOptions" :key="index" class="config-option-row">
+          <el-input v-model="item.key" :placeholder="T('OptionKey')" style="width: 180px" />
+          <el-input v-model="item.value" :placeholder="T('OptionValue')" style="width: 180px" />
+          <el-button type="danger" :icon="Delete" circle @click="strategyConfigOptions.splice(index, 1)" />
+        </div>
+        <el-form-item>
+          <el-button type="primary" @click="strategyConfigOptions.push({ key: '', value: '' })" :icon="Plus">{{ T('AddOption') }}</el-button>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button @click="strategyDialogVisible = false">{{ T('Cancel') }}</el-button>
+          <el-button type="primary" @click="submitStrategy" :loading="strategySubmitting">{{ T('Save') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-  import { onActivated, onMounted, watch } from 'vue'
+  import { onActivated, onMounted, ref, reactive, watch } from 'vue'
+  import { Delete, Plus } from '@element-plus/icons-vue'
+  import { ElMessage } from 'element-plus'
+  import { list as strategyListApi, create as strategyCreateApi, update as strategyUpdateApi } from '@/api/peer_strategy'
   import { useRepositories } from '@/views/address_book/index'
   import { toWebClientLink } from '@/utils/webclient'
   import { T } from '@/utils/i18n'
@@ -209,6 +238,7 @@
       items.push({ label: 'Web Client', command: 'webClient' })
     }
     items.push(
+      { label: T('PeerStrategy'), command: 'strategy' },
       { label: T('Edit'), command: 'edit' },
       { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
     )
@@ -218,8 +248,68 @@
     switch (cmd) {
       case 'link': connectByClient(row.id); break
       case 'webClient': toWebClientLink(row); break
+      case 'strategy': toStrategy(row); break
       case 'edit': toEdit(row); break
       case 'delete': del(row); break
+    }
+  }
+
+  // 策略配置对话框
+  const strategyDialogVisible = ref(false)
+  const strategySubmitting = ref(false)
+  const strategyForm = reactive({
+    id: 0,
+    peer_id: '',
+  })
+  const strategyConfigOptions = ref([])
+
+  const toStrategy = async (row) => {
+    strategyForm.id = 0
+    strategyForm.peer_id = row.id
+    strategyConfigOptions.value = []
+
+    // 加载已有策略
+    const res = await strategyListApi({ page: 1, page_size: 1, peer_id: row.id }).catch(_ => false)
+    if (res && res.data.list && res.data.list.length > 0) {
+      const item = res.data.list[0]
+      strategyForm.id = item.id
+      let opts = item.config_options || {}
+      if (typeof opts === 'string') {
+        try { opts = JSON.parse(opts) } catch (e) { opts = {} }
+      }
+      Object.keys(opts).forEach(key => {
+        strategyConfigOptions.value.push({ key, value: opts[key] })
+      })
+    }
+    strategyDialogVisible.value = true
+  }
+
+  const submitStrategy = async () => {
+    strategySubmitting.value = true
+    const configOptions = {}
+    strategyConfigOptions.value.forEach(item => {
+      if (item.key) {
+        configOptions[item.key] = item.value
+      }
+    })
+
+    let res
+    if (strategyForm.id) {
+      res = await strategyUpdateApi({
+        id: strategyForm.id,
+        peer_id: strategyForm.peer_id,
+        config_options: configOptions,
+      }).catch(_ => false)
+    } else {
+      res = await strategyCreateApi({
+        peer_id: strategyForm.peer_id,
+        config_options: configOptions,
+      }).catch(_ => false)
+    }
+    strategySubmitting.value = false
+    if (res) {
+      ElMessage.success(T('OperationSuccess'))
+      strategyDialogVisible.value = false
     }
   }
 
@@ -262,6 +352,24 @@
 <style scoped lang="scss">
 .list-query .el-select {
   --el-select-width: 160px;
+}
+
+.config-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+@media (max-width: 1024px) {
+  .config-option-row {
+    flex-wrap: wrap;
+    margin-left: 0;
+  }
+  .config-option-row .el-input {
+    width: 100% !important;
+  }
 }
 
 .colors {

@@ -403,6 +403,9 @@
   "AddressBookName": {
     "One": "Nombre de la libreta"
   },
+  "AddressBookCollection": {
+    "One": "Colección de libreta de direcciones"
+  },
   "AddRule": {
     "One": "Agregar regla"
   },
@@ -439,14 +442,26 @@
   "LastOnlineIp": {
     "One": "Última IP en línea"
   },
+  "or login in with": {
+    "One": "o inicia sesión con"
+  },
+  "Optional, default is": {
+    "One": "Opcional, el valor predeterminado es"
+  },
+  "Check your IdP docs, without": {
+    "One": "Consulta la documentación de tu IdP, sin"
+  },
+  "For OIDC login without a password, enter any 4-20 letters": {
+    "One": "Para inicio de sesión OIDC sin contraseña, ingrese cualquier 4-20 letras"
+  },
   "OldPassword": {
     "One": "Contraseña antigua"
   },
-  "NewPasswordEqualOldPassword": {
-    "One": "La nueva contraseña no puede ser igual a la antigua"
-  },
   "NewPassword": {
     "One": "Nueva contraseña"
+  },
+  "NewPasswordEqualOldPassword": {
+    "One": "La nueva contraseña no puede ser igual a la antigua"
   },
   "ConfirmPassword": {
     "One": "Confirmar contraseña"
@@ -460,8 +475,17 @@
   "UserToken": {
     "One": "Token del usuario"
   },
+  "Email": {
+    "One": "Correo electrónico"
+  },
   "MyPeer": {
     "One": "Mis pares"
+  },
+  "View": {
+    "One": "Ver"
+  },
+  "Information": {
+    "One": "Información"
   },
   "BatchAddToAB": {
     "One": "Agregar en bloque a la libreta de direcciones"
@@ -517,6 +541,12 @@
   "Result": {
     "One": "Resultado"
   },
+  "DeviceGroupManage": {
+    "One": "Gestión de grupo de dispositivos"
+  },
+  "Import": {
+    "One": "Importar"
+  },
   "Drop file here or click to upload": {
     "One": "Suelte el archivo aquí o haga clic para cargar"
   },
@@ -531,5 +561,29 @@
   },
   "Remark": {
     "One": "Remark"
+  },
+  "PeerStrategy": {
+    "One": "Estrategia"
+  },
+  "DefaultStrategy": {
+    "One": "Estrategia predeterminada"
+  },
+  "ConfigOptions": {
+    "One": "Opciones de configuración"
+  },
+  "ModifiedAt": {
+    "One": "Modificado"
+  },
+  "OptionKey": {
+    "One": "Clave"
+  },
+  "OptionValue": {
+    "One": "Valor"
+  },
+  "AddOption": {
+    "One": "Agregar opción"
+  },
+  "Token": {
+    "One": "Token"
   }
 }

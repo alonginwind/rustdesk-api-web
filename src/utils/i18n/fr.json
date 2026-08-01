@@ -188,9 +188,6 @@
   "ConfirmOauth": {
     "One": "Confirmer Oauth"
   },
-  "View": {
-    "One": "Informations"
-  },
   "Device": {
     "One": "Appareil"
   },
@@ -301,6 +298,9 @@
   "ExpireTime": {
     "One": "Heure d'expiration"
   },
+  "ShareByWebClient": {
+    "One": "Partager via le client Web"
+  },
   "Minutes": {
     "One": "{param} Minute",
     "Other": "{param} Minutes"
@@ -403,6 +403,9 @@
   "AddressBookName": {
     "One": "Nom du carnet d'adresses"
   },
+  "AddressBookCollection": {
+    "One": "Collection de carnet d'adresses"
+  },
   "AddRule": {
     "One": "Ajouter une règle"
   },
@@ -439,14 +442,26 @@
   "LastOnlineIp": {
     "One": "Dernière adresse IP en ligne"
   },
+  "or login in with": {
+    "One": "ou connectez-vous avec"
+  },
+  "Optional, default is": {
+    "One": "Facultatif, la valeur par défaut est"
+  },
+  "Check your IdP docs, without": {
+    "One": "Consultez la documentation de votre IdP, sans"
+  },
+  "For OIDC login without a password, enter any 4-20 letters": {
+    "One": "Pour la connexion OIDC sans mot de passe, entrez 4 à 20 lettres"
+  },
   "OldPassword": {
     "One": "Ancien mot de passe"
   },
-  "NewPasswordEqualOldPassword": {
-    "One": "Le nouveau mot de passe est identique à l'ancien mot de passe"
-  },
   "NewPassword": {
     "One": "Nouveau mot de passe"
+  },
+  "NewPasswordEqualOldPassword": {
+    "One": "Le nouveau mot de passe est identique à l'ancien mot de passe"
   },
   "ConfirmPassword": {
     "One": "Confirmer le mot de passe"
@@ -460,11 +475,17 @@
   "UserToken": {
     "One": "Jeton Utilisateur"
   },
-  "Token": {
-    "One": "Jeton"
+  "Email": {
+    "One": "E-mail"
   },
   "MyPeer": {
     "One": "Mon appareil"
+  },
+  "View": {
+    "One": "Informations"
+  },
+  "Information": {
+    "One": "Information"
   },
   "BatchAddToAB": {
     "One": "Ajout par lots au carnet d'adresses"
@@ -520,6 +541,12 @@
   "Result": {
     "One": "Résultat"
   },
+  "DeviceGroupManage": {
+    "One": "Gestion de groupe d'appareils"
+  },
+  "Import": {
+    "One": "Importer"
+  },
   "Drop file here or click to upload": {
     "One": "Déposez le fichier ici ou cliquez pour télécharger"
   },
@@ -534,5 +561,29 @@
   },
   "Remark": {
     "One": "Remarque"
+  },
+  "PeerStrategy": {
+    "One": "Stratégie"
+  },
+  "DefaultStrategy": {
+    "One": "Stratégie par défaut"
+  },
+  "ConfigOptions": {
+    "One": "Options de configuration"
+  },
+  "ModifiedAt": {
+    "One": "Modifié"
+  },
+  "OptionKey": {
+    "One": "Clé"
+  },
+  "OptionValue": {
+    "One": "Valeur"
+  },
+  "AddOption": {
+    "One": "Ajouter une option"
+  },
+  "Token": {
+    "One": "Jeton"
   }
 }

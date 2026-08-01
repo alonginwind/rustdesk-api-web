@@ -547,5 +547,29 @@
   },
   "Remark": {
     "One": "備註"
+  },
+  "PeerStrategy": {
+    "One": "策略配置"
+  },
+  "DefaultStrategy": {
+    "One": "預設策略"
+  },
+  "ConfigOptions": {
+    "One": "配置選項"
+  },
+  "ModifiedAt": {
+    "One": "修改時間"
+  },
+  "OptionKey": {
+    "One": "選項鍵"
+  },
+  "OptionValue": {
+    "One": "選項值"
+  },
+  "AddOption": {
+    "One": "新增選項"
+  },
+  "Token": {
+    "One": "權杖"
   }
 }

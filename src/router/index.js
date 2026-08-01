@@ -155,6 +155,12 @@ export const asyncRoutes = [
         component: () => import('@/views/address_book/index.vue'),
       },
       {
+        path: 'peerStrategy',
+        name: 'PeerStrategy',
+        meta: { title: 'PeerStrategy', icon: 'SetUp' /*keepAlive: true*/ },
+        component: () => import('@/views/peer_strategy/list.vue'),
+      },
+      {
         path: 'tag',
         name: 'UserTag',
         meta: { title: 'TagsManage', icon: 'CollectionTag' /*keepAlive: true*/ },
