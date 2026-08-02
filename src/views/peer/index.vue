@@ -25,6 +25,9 @@
         <el-form-item label="IP">
           <el-input v-model="listQuery.ip" clearable/>
         </el-form-item>
+        <el-form-item :label="T('Version')">
+          <el-input v-model="listQuery.version" clearable/>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
           <el-button type="danger" @click="toAdd">{{ T('Add') }}</el-button>
@@ -339,6 +342,7 @@
     username: '',
     alias: '',
     ip: '',
+    version: '',
   })
 
   const getList = async () => {
