@@ -571,5 +571,23 @@
   },
   "Token": {
     "One": "令牌"
+  },
+  "OperationLog": {
+    "One": "操作日志"
+  },
+  "Operator": {
+    "One": "操作人"
+  },
+  "Resource": {
+    "One": "资源类型"
+  },
+  "Op": {
+    "One": "操作类型"
+  },
+  "Path": {
+    "One": "请求路径"
+  },
+  "Detail": {
+    "One": "详情"
   }
 }

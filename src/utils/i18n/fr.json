@@ -585,5 +585,23 @@
   },
   "Token": {
     "One": "Jeton"
+  },
+  "OperationLog": {
+    "One": "Journal des opérations"
+  },
+  "Operator": {
+    "One": "Opérateur"
+  },
+  "Resource": {
+    "One": "Type de ressource"
+  },
+  "Op": {
+    "One": "Type d'opération"
+  },
+  "Path": {
+    "One": "Chemin de la requête"
+  },
+  "Detail": {
+    "One": "Détail"
   }
 }

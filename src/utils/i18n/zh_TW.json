@@ -571,5 +571,23 @@
   },
   "Token": {
     "One": "權杖"
+  },
+  "OperationLog": {
+    "One": "操作日誌"
+  },
+  "Operator": {
+    "One": "操作人"
+  },
+  "Resource": {
+    "One": "資源類型"
+  },
+  "Op": {
+    "One": "操作類型"
+  },
+  "Path": {
+    "One": "請求路徑"
+  },
+  "Detail": {
+    "One": "詳情"
   }
 }

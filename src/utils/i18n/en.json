@@ -585,5 +585,23 @@
   },
   "Token": {
     "One": "Token"
+  },
+  "OperationLog": {
+    "One": "Operation Log"
+  },
+  "Operator": {
+    "One": "Operator"
+  },
+  "Resource": {
+    "One": "Resource"
+  },
+  "Op": {
+    "One": "Operation"
+  },
+  "Path": {
+    "One": "Path"
+  },
+  "Detail": {
+    "One": "Detail"
   }
 }

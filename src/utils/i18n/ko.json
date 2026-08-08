@@ -571,5 +571,23 @@
   },
   "Token": {
     "One": "토큰"
+  },
+  "OperationLog": {
+    "One": "작업 로그"
+  },
+  "Operator": {
+    "One": "작업자"
+  },
+  "Resource": {
+    "One": "리소스 유형"
+  },
+  "Op": {
+    "One": "작업 유형"
+  },
+  "Path": {
+    "One": "요청 경로"
+  },
+  "Detail": {
+    "One": "상세"
   }
 }

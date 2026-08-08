@@ -585,5 +585,23 @@
   },
   "Token": {
     "One": "Token"
+  },
+  "OperationLog": {
+    "One": "Registro de operaciones"
+  },
+  "Operator": {
+    "One": "Operador"
+  },
+  "Resource": {
+    "One": "Tipo de recurso"
+  },
+  "Op": {
+    "One": "Tipo de operación"
+  },
+  "Path": {
+    "One": "Ruta de solicitud"
+  },
+  "Detail": {
+    "One": "Detalle"
   }
 }
