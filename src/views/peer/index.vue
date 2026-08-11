@@ -125,7 +125,7 @@
               <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
               <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
               <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
-              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button @click="toView(row)">{{ T('View') }}</el-button>
               <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
             </template>
           </template>
@@ -184,6 +184,35 @@
         <el-form-item>
           <el-button @click="formVisible = false">{{ T('Cancel') }}</el-button>
           <el-button @click="submit" type="primary">{{ T('Submit') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
+    <el-dialog v-model="viewFormVisible" :title="T('Information')" :width="isMobile ? '95%' : 800" :style="{ textAlign: 'center' }">
+      <el-form class="dialog-form" ref="form" :model="viewFormData" label-width="120px">
+        <el-form-item label="ID" prop="id">
+          <el-input v-model="viewFormData.id" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Username')" prop="username">
+          <el-input v-model="viewFormData.username" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Hostname')" prop="hostname">
+          <el-input v-model="viewFormData.hostname" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="CPU" prop="cpu">
+          <el-input v-model="viewFormData.cpu" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Memory')" prop="memory">
+          <el-input v-model="viewFormData.memory" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Os')" prop="os">
+          <el-input v-model="viewFormData.os" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Uuid')" prop="uuid">
+          <el-input v-model="viewFormData.uuid" disabled></el-input>
+        </el-form-item>
+        <el-form-item :label="T('Version')" prop="version">
+          <el-input v-model="viewFormData.version" disabled></el-input>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -285,7 +314,7 @@
     }
     items.push(
       { label: T('AddToAddressBook'), command: 'addToAB' },
-      { label: T('Edit'), command: 'edit' },
+      { label: T('View'), command: 'view' },
       { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
     )
     return items
@@ -295,7 +324,7 @@
       case 'link': connectByClient(row.id); break
       case 'webClient': toWebClientLink(row); break
       case 'addToAB': toAddressBook(row); break
-      case 'edit': toEdit(row); break
+      case 'view': toView(row); break
       case 'delete': del(row); break
     }
   }
@@ -399,11 +428,23 @@
     version: '',
   })
 
-  const toEdit = (row) => {
-    formVisible.value = true
-    //将row中的数据赋值给formData
-    Object.keys(formData).forEach(key => {
-      formData[key] = row[key]
+  const viewFormVisible = ref(false)
+  const viewFormData = reactive({
+    id: '',
+    username: '',
+    hostname: '',
+    cpu: '',
+    memory: '',
+    os: '',
+    uuid: '',
+    version: '',
+  })
+
+  const toView = (row) => {
+    viewFormVisible.value = true
+    //将row中的数据赋值给viewFormData
+    Object.keys(viewFormData).forEach(key => {
+      viewFormData[key] = row[key]
     })
   }
   const toAdd = () => {
