@@ -114,7 +114,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="ID" prop="id" required>
-          <el-input v-model="ABFormData.id"></el-input>
+          <el-input v-model="ABFormData.id" disabled></el-input>
         </el-form-item>
         <el-form-item :label="T('Username')" prop="username">
           <el-input v-model="ABFormData.username"></el-input>
