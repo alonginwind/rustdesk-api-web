@@ -43,7 +43,7 @@
         <el-table-column :label="T('FileInfo')" align="center" width="300">
           <template #default="{row}">
             <template v-if="!row.is_file">
-              <el-table size="small" :data="row.info?.files?.filter((v,k) => k<showDirFileNum)" fit>
+              <el-table size="small" :data="dirFiles(row).slice(0, showDirFileNum)" fit>
                 <el-table-column prop="0" :label="T('FileName')" align="center" width="150" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="1" :label="T('Size')" align="center">
                   <template #default="{row:_row}">
@@ -51,17 +51,19 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <el-button size="small" v-if="row.info.files.length>showDirFileNum" style="width: 100%;margin-top: 5px" type="primary" @click="showAllFile(row.info.files)">
-                {{ T('More') }}({{ row.info.files.length - showDirFileNum }})
+              <el-button size="small" v-if="dirFiles(row).length>showDirFileNum" style="width: 100%;margin-top: 5px" type="primary" @click="showAllFile(dirFiles(row))">
+                {{ T('More') }}({{ dirFiles(row).length - showDirFileNum }})
               </el-button>
             </template>
-            <div v-else>
-              {{ sizeFormat(row.info.files[0][1]) }}
+            <div v-else-if="dirFiles(row).length">
+              {{ sizeFormat(dirFiles(row)[0][1]) }}
             </div>
+            <div v-else>-</div>
 
           </template>
         </el-table-column>
         <el-table-column prop="path" :label="T('Path')" align="center" width="150" show-overflow-tooltip/>
+        <el-table-column prop="conn_id" :label="T('ConnId')" align="center" width="90"/>
         <el-table-column prop="uuid" label="uuid" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" min-width="120"/>
         <el-table-column :label="T('Actions')" align="center" width="150" fixed="right">
@@ -106,6 +108,9 @@
   const isMobile = useIsMobile()
 
   const showDirFileNum = 3
+  // A record whose json never arrived keeps `info` as the '-' string the list
+  // loader puts there, so nothing below may reach for info.files directly.
+  const dirFiles = (row) => (Array.isArray(row.info?.files) ? row.info.files : [])
   const {
     listRes,
     listQuery,

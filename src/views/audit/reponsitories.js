@@ -112,7 +112,13 @@ export function useFileRepositories () {
     listRes.loading = false
     if (res) {
       listRes.list = res.data.list.map(item => {
-        item.info = item.info ? JSON.parse(item.info) : '-'
+        // One row carrying malformed json used to abort the whole map, so a
+        // single bad record left the table on the previous page's data.
+        try {
+          item.info = item.info ? JSON.parse(item.info) : '-'
+        } catch (e) {
+          item.info = '-'
+        }
         return item
       })
       listRes.total = res.data.total

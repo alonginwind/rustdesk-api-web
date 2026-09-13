@@ -23,12 +23,22 @@
         <el-table-column :label="T('FromPeer')" prop="from_peer" align="center" width="120"/>
         <el-table-column :label="T('FromName')" prop="from_name" align="center" width="120"/>
         <el-table-column :label="T('Ip')" prop="ip" align="center" width="120"/>
-        <el-table-column pop="type" :label="T('Type')" align="center" width="120">
+        <el-table-column prop="type" :label="T('Type')" align="center" width="120">
           <template #default="{row}">
-            <el-tag v-if="row.type === 1" type="warning">{{ T('File') }}</el-tag>
-            <el-tag v-else>{{ T('Common') }}</el-tag>
+            <el-tag :type="connTypeTag[row.type] ?? 'info'">{{ connTypeText(row.type) }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column :label="T('AuthMethod')" align="center" width="180">
+          <template #default="{row}">
+            <div class="auth-tags">
+              <el-tag v-for="(text, i) in connAuthTexts(row)" :key="i" size="small" type="info">
+                {{ text }}
+              </el-tag>
+            </div>
+            <span v-if="!row.primary_auth && !row.two_factor">-</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="conn_id" :label="T('ConnId')" align="center" width="90"/>
         <el-table-column prop="uuid" label="uuid" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
         <el-table-column :label="T('CloseTime')" prop="close_time" align="center"/>
@@ -59,6 +69,22 @@
   import { useIsMobile } from '@/utils/useIsMobile'
   const isMobile = useIsMobile()
 
+  // The controlled side reports the session kind and how it was authorized, the
+  // codes being the ones in its connection audit. An unmapped code still shows
+  // its number, so a kind added later is visible rather than read as a desktop
+  // session or as a connection nobody authenticated. Zero is the absence of a
+  // report, which is why it maps to nothing below and not to "#0".
+  const connTypeKey = { 0: 'RemoteDesktop', 1: 'File', 2: 'PortForward', 3: 'Rdp', 4: 'ViewCamera', 5: 'Terminal' }
+  const connTypeTag = { 0: 'primary', 1: 'warning', 2: 'info', 3: 'success', 4: 'danger', 5: '' }
+  const connAuthKey = { 1: 'AuthClick', 2: 'OncePassword', 3: 'FixedPassword', 4: 'AuthSwitchSides' }
+  const connTwoFactorKey = { 1: 'Totp', 2: 'TrustedDevice' }
+  const connTypeText = (type) => connTypeKey[type] ? T(connTypeKey[type]) : `#${type}`
+  const connAuthTexts = (row) => {
+    return [[connAuthKey, row.primary_auth], [connTwoFactorKey, row.two_factor]]
+      .filter(([, code]) => code)
+      .map(([map, code]) => map[code] ? T(map[code]) : `#${code}`)
+  }
+
   const {
     listRes,
     listQuery,
@@ -88,5 +114,10 @@
 </script>
 
 <style scoped lang="scss">
-
+  .auth-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  }
 </style>

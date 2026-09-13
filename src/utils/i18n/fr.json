@@ -598,9 +598,6 @@
   "Op": {
     "One": "Type d'opération"
   },
-  "Path": {
-    "One": "Chemin de la requête"
-  },
   "Detail": {
     "One": "Détail"
   },
@@ -650,5 +647,26 @@
   "DetailAlias": { "One": "Alias" },
   "DetailUsername": { "One": "Nom d'utilisateur" },
   "DetailHostname": { "One": "Hôte" },
-  "DetailCollectionId": { "One": "ID de collection" }
+  "DetailCollectionId": { "One": "ID de collection" },
+  "RemoteDesktop": { "One": "Bureau à distance" },
+  "PortForward": { "One": "Transfert de port" },
+  "Rdp": { "One": "RDP" },
+  "ViewCamera": { "One": "Voir la caméra" },
+  "Camera": { "One": "Caméra" },
+  "Terminal": { "One": "Terminal" },
+  "ConnId": { "One": "ID de connexion" },
+  "AuthMethod": { "One": "Authentification" },
+  "AuthClick": { "One": "Accepté sur l'appareil" },
+  "AuthSwitchSides": { "One": "Bascule depuis l'appareil contrôlé" },
+  "Totp": { "One": "Code à usage unique (TOTP)" },
+  "TrustedDevice": { "One": "Appareil de confiance" },
+  "Size": { "One": "Taille" },
+  "More": { "One": "Plus" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "Fournisseur d'identité" },
+  "Bind": { "One": "Lier" },
+  "PkceEnable": { "One": "PKCE activé" },
+  "PkceMethod": { "One": "Méthode PKCE" },
+  "Your IdP Name": { "One": "Nom de votre IdP" },
+  "InvalidParam": { "One": "Paramètre invalide : {param}" }
 }

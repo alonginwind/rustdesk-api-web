@@ -598,9 +598,6 @@
   "Op": {
     "One": "Operation"
   },
-  "Path": {
-    "One": "Path"
-  },
   "Detail": {
     "One": "Detail"
   },
@@ -650,5 +647,26 @@
   "DetailAlias": { "One": "Alias" },
   "DetailUsername": { "One": "Username" },
   "DetailHostname": { "One": "Hostname" },
-  "DetailCollectionId": { "One": "Collection ID" }
+  "DetailCollectionId": { "One": "Collection ID" },
+  "RemoteDesktop": { "One": "Remote Desktop" },
+  "PortForward": { "One": "Port Forward" },
+  "Rdp": { "One": "RDP" },
+  "ViewCamera": { "One": "View Camera" },
+  "Camera": { "One": "Camera" },
+  "Terminal": { "One": "Terminal" },
+  "ConnId": { "One": "Connection ID" },
+  "AuthMethod": { "One": "Authentication" },
+  "AuthClick": { "One": "Accepted on the device" },
+  "AuthSwitchSides": { "One": "Switched from the controlled side" },
+  "Totp": { "One": "One-time code (TOTP)" },
+  "TrustedDevice": { "One": "Trusted device" },
+  "Size": { "One": "Size" },
+  "More": { "One": "More" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "IdP" },
+  "Bind": { "One": "Bind" },
+  "PkceEnable": { "One": "PKCE Enabled" },
+  "PkceMethod": { "One": "PKCE Method" },
+  "Your IdP Name": { "One": "Your IdP Name" },
+  "InvalidParam": { "One": "Invalid parameter: {param}" }
 }
