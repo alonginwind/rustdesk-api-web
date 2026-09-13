@@ -584,9 +584,6 @@
   "Op": {
     "One": "操作類型"
   },
-  "Path": {
-    "One": "請求路徑"
-  },
   "Detail": {
     "One": "詳情"
   },
@@ -636,5 +633,26 @@
   "DetailAlias": { "One": "別名" },
   "DetailUsername": { "One": "使用者名稱" },
   "DetailHostname": { "One": "主機" },
-  "DetailCollectionId": { "One": "集合ID" }
+  "DetailCollectionId": { "One": "集合ID" },
+  "RemoteDesktop": { "One": "遠端桌面" },
+  "PortForward": { "One": "埠轉發" },
+  "Rdp": { "One": "RDP遠端" },
+  "ViewCamera": { "One": "檢視攝影機" },
+  "Camera": { "One": "攝影機" },
+  "Terminal": { "One": "終端機" },
+  "ConnId": { "One": "連線ID" },
+  "AuthMethod": { "One": "認證方式" },
+  "AuthClick": { "One": "被控端點擊同意" },
+  "AuthSwitchSides": { "One": "切換控制端" },
+  "Totp": { "One": "動態密碼" },
+  "TrustedDevice": { "One": "受信任裝置" },
+  "Size": { "One": "大小" },
+  "More": { "One": "更多" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "身分提供者" },
+  "Bind": { "One": "繫結" },
+  "PkceEnable": { "One": "PKCE 啟用" },
+  "PkceMethod": { "One": "PKCE 方式" },
+  "Your IdP Name": { "One": "你的 IdP 名稱" },
+  "InvalidParam": { "One": "參數 {param} 無效" }
 }

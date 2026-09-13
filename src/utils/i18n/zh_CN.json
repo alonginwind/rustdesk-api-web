@@ -584,9 +584,6 @@
   "Op": {
     "One": "操作类型"
   },
-  "Path": {
-    "One": "请求路径"
-  },
   "Detail": {
     "One": "详情"
   },
@@ -636,5 +633,26 @@
   "DetailAlias": { "One": "别名" },
   "DetailUsername": { "One": "用户名" },
   "DetailHostname": { "One": "主机" },
-  "DetailCollectionId": { "One": "集合ID" }
+  "DetailCollectionId": { "One": "集合ID" },
+  "RemoteDesktop": { "One": "远程桌面" },
+  "PortForward": { "One": "端口转发" },
+  "Rdp": { "One": "RDP远程" },
+  "ViewCamera": { "One": "查看摄像头" },
+  "Camera": { "One": "摄像头" },
+  "Terminal": { "One": "终端" },
+  "ConnId": { "One": "连接ID" },
+  "AuthMethod": { "One": "认证方式" },
+  "AuthClick": { "One": "被控端点击同意" },
+  "AuthSwitchSides": { "One": "切换控制端" },
+  "Totp": { "One": "动态口令" },
+  "TrustedDevice": { "One": "受信任设备" },
+  "Size": { "One": "大小" },
+  "More": { "One": "更多" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "身份提供方" },
+  "Bind": { "One": "绑定" },
+  "PkceEnable": { "One": "PKCE 启用" },
+  "PkceMethod": { "One": "PKCE 方式" },
+  "Your IdP Name": { "One": "你的 IdP 名称" },
+  "InvalidParam": { "One": "参数 {param} 无效" }
 }

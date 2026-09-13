@@ -275,7 +275,7 @@ export function useBatchUpdateTagsRepositories () {
     }
     const res = await batchUpdateTags(formData.value).catch(_ => false)
     if (res) {
-      ElMessage.success(T('Success'))
+      ElMessage.success(T('OperationSuccess'))
       visible.value = false
       return true
     }

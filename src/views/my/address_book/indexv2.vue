@@ -22,13 +22,13 @@
     <el-main class="con">
       <el-card class="list-query" shadow="hover">
         <el-form inline label-width="80px">
-<!--          <el-form-item :label="T('Name')">
+            <!--          <el-form-item :label="T('Name')">
             <el-select v-model="listQuery.collection_id" clearable>
               <el-option :value="0" :label="T('MyAddressBook')"></el-option>
               <el-option v-for="c in collectionListRes.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
             </el-select>
           </el-form-item>-->
-          <el-form-item :label="T('Id')">
+          <el-form-item :label="T('ID')">
             <el-input v-model="listQuery.id" clearable></el-input>
           </el-form-item>
           <el-form-item :label="T('Username')">

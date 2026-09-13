@@ -26,8 +26,8 @@ export function T (key, params, num = 0) {
   const msg = num > 1 ? (tran.Other ? tran.Other : tran.One) : tran.One
   //msg 是这样 {name} is name
   //params 是这样 {name: 'zhangsan'}
-  //替换
+  //替换, 未传 params 时保留占位符, 不抛错
   return msg.replace(/{(\w+)}/g, function (match, key) {
-    return params[key] || match
+    return params?.[key] || match
   })
 }

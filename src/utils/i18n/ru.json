@@ -598,9 +598,6 @@
   "Op": {
     "One": "Тип операции"
   },
-  "Path": {
-    "One": "Путь запроса"
-  },
   "Detail": {
     "One": "Подробности"
   },
@@ -650,5 +647,26 @@
   "DetailAlias": { "One": "Псевдоним" },
   "DetailUsername": { "One": "Имя пользователя" },
   "DetailHostname": { "One": "Хост" },
-  "DetailCollectionId": { "One": "ID коллекции" }
+  "DetailCollectionId": { "One": "ID коллекции" },
+  "RemoteDesktop": { "One": "Удалённый рабочий стол" },
+  "PortForward": { "One": "Проброс порта" },
+  "Rdp": { "One": "RDP" },
+  "ViewCamera": { "One": "Просмотр камеры" },
+  "Camera": { "One": "Камера" },
+  "Terminal": { "One": "Терминал" },
+  "ConnId": { "One": "ID подключения" },
+  "AuthMethod": { "One": "Способ аутентификации" },
+  "AuthClick": { "One": "Подтверждено на устройстве" },
+  "AuthSwitchSides": { "One": "Переключено с контролируемого устройства" },
+  "Totp": { "One": "Одноразовый код (TOTP)" },
+  "TrustedDevice": { "One": "Доверенное устройство" },
+  "Size": { "One": "Размер" },
+  "More": { "One": "Ещё" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "Провайдер идентификации" },
+  "Bind": { "One": "Привязать" },
+  "PkceEnable": { "One": "PKCE включён" },
+  "PkceMethod": { "One": "Метод PKCE" },
+  "Your IdP Name": { "One": "Имя вашего IdP" },
+  "InvalidParam": { "One": "Недопустимый параметр: {param}" }
 }

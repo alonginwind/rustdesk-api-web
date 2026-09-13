@@ -584,9 +584,6 @@
   "Op": {
     "One": "작업 유형"
   },
-  "Path": {
-    "One": "요청 경로"
-  },
   "Detail": {
     "One": "상세"
   },
@@ -636,5 +633,26 @@
   "DetailAlias": { "One": "별칭" },
   "DetailUsername": { "One": "사용자 이름" },
   "DetailHostname": { "One": "호스트" },
-  "DetailCollectionId": { "One": "컬렉션 ID" }
+  "DetailCollectionId": { "One": "컬렉션 ID" },
+  "RemoteDesktop": { "One": "원격 데스크톱" },
+  "PortForward": { "One": "포트 포워딩" },
+  "Rdp": { "One": "RDP" },
+  "ViewCamera": { "One": "카메라 보기" },
+  "Camera": { "One": "카메라" },
+  "Terminal": { "One": "터미널" },
+  "ConnId": { "One": "연결 ID" },
+  "AuthMethod": { "One": "인증 방식" },
+  "AuthClick": { "One": "기기 승인" },
+  "AuthSwitchSides": { "One": "제어 전환" },
+  "Totp": { "One": "일회용 코드(TOTP)" },
+  "TrustedDevice": { "One": "신뢰 디바이스" },
+  "Size": { "One": "크기" },
+  "More": { "One": "더보기" },
+  "ID": { "One": "ID" },
+  "IdP": { "One": "신원 제공자" },
+  "Bind": { "One": "바인딩" },
+  "PkceEnable": { "One": "PKCE 사용" },
+  "PkceMethod": { "One": "PKCE 방식" },
+  "Your IdP Name": { "One": "IdP 이름" },
+  "InvalidParam": { "One": "잘못된 매개변수: {param}" }
 }
