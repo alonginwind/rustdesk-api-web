@@ -82,10 +82,9 @@ export const useAppStore = defineStore({
       const res = await server().catch(_ => false)
       if (res) {
         this.setting.rustdeskConfig = res.data
-        const prefix = 'wc-'
-        localStorage.setItem(`${prefix}custom-rendezvous-server`, res.data.id_server)
-        localStorage.setItem(`${prefix}key`, res.data.key)
-        localStorage.setItem(`${prefix}api-server`, res.data.api_server)
+        localStorage.setItem(`custom-rendezvous-server`, res.data.id_server)
+        localStorage.setItem(`key`, res.data.key)
+        localStorage.setItem(`api-server`, res.data.api_server)
       }
 
     },
