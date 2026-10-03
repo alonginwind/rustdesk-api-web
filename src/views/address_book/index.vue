@@ -58,7 +58,7 @@
             <span v-else>{{ row.collection?.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="username" :label="T('Username')" align="center" width="150"/>
+        <el-table-column prop="username" :label="T('Username')" align="center" width="150" show-overflow-tooltip/>
         <el-table-column prop="hostname" :label="T('Hostname')" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="tags" :label="T('Tags')" align="center" min_width="180" show-overflow-tooltip/>
         <!--        <el-table-column prop="created_at" label="创建时间" align="center"/>-->
