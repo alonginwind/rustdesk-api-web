@@ -11,6 +11,9 @@
         <el-form-item :label="T('Op')">
           <el-input v-model="listQuery.op" clearable></el-input>
         </el-form-item>
+        <el-form-item :label="T('Detail')">
+          <el-input v-model="listQuery.detail" clearable></el-input>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
         </el-form-item>
@@ -58,6 +61,7 @@
     username: '',
     resource: '',
     op: '',
+    detail: '',
   })
 
   const getList = async () => {
