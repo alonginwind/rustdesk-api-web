@@ -19,7 +19,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handlerQuery">{{ T('Filter') }}</el-button>
-          <el-button type="danger" @click="toAdd">{{ T('Add') }}</el-button>
+          <!-- <el-button type="danger" @click="toAdd">{{ T('Add') }}</el-button>-->
           <el-button v-if="!isMobile" type="primary" @click="showBatchEditTags">{{ T('BatchEditTags') }}</el-button>
           <el-dropdown v-if="isMobile" trigger="click" @command="handleAbBatchCommand" style="margin-left: 5px">
             <el-button>···<el-icon class="el-icon--right"><ArrowDown/></el-icon></el-button>
