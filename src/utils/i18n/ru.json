@@ -568,6 +568,9 @@
   "DefaultStrategy": {
     "One": "Стратегия по умолчанию"
   },
+  "UnboundDefaultStrategy": {
+    "One": "Стратегия по умолчанию (не привязано)"
+  },
   "ConfigOptions": {
     "One": "Параметры конфигурации"
   },

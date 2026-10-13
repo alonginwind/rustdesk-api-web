@@ -554,6 +554,9 @@
   "DefaultStrategy": {
     "One": "默认策略"
   },
+  "UnboundDefaultStrategy": {
+    "One": "未绑策略"
+  },
   "ConfigOptions": {
     "One": "配置选项"
   },

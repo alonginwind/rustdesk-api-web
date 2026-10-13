@@ -568,6 +568,9 @@
   "DefaultStrategy": {
     "One": "Estrategia predeterminada"
   },
+  "UnboundDefaultStrategy": {
+    "One": "Estrategia predeterminada (sin vincular)"
+  },
   "ConfigOptions": {
     "One": "Opciones de configuración"
   },

@@ -15,7 +15,8 @@
       <el-table :data="tableData" v-loading="listRes.loading" border>
         <el-table-column prop="peer_id" label="ID" align="center" width="200">
           <template #default="{row}">
-            <span v-if="row.peer_id">{{ row.peer_id }}</span>
+            <span v-if="row.peer_id === UNBOUND_PEER_ID">{{ T('UnboundDefaultStrategy') }}</span>
+            <span v-else-if="row.peer_id">{{ row.peer_id }}</span>
             <span v-else>{{ T('DefaultStrategy') }}</span>
           </template>
         </el-table-column>
@@ -42,7 +43,7 @@
             <MobileActions v-if="isMobile" :items="getMobileActions(row)" @command="(cmd) => handleAction(cmd, row)" />
             <template v-else>
               <el-button type="primary" @click="toEdit(row)">{{ T('Edit') }}</el-button>
-              <el-button v-if="row.peer_id" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+              <el-button v-if="row.peer_id && row.peer_id !== UNBOUND_PEER_ID" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
             </template>
           </template>
         </el-table-column>
@@ -64,7 +65,7 @@
     <el-dialog v-model="editDialogVisible" :title="T('Edit')" :width="isMobile ? '95%' : 600">
       <el-form class="dialog-form" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item label="ID">
-          <el-input v-model="editForm.peer_id" disabled />
+          <el-input :model-value="displayEditPeerId" disabled />
         </el-form-item>
 
         <el-divider content-position="left">{{ T('ConfigOptions') }}</el-divider>
@@ -88,15 +89,18 @@
 </template>
 
 <script setup>
-  import { onMounted, reactive, ref, watch } from 'vue'
+  import { onMounted, reactive, ref, computed, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { Delete, Plus } from '@element-plus/icons-vue'
-  import { list as strategyList, update, remove, getDefault, updateDefault } from '@/api/peer_strategy'
+  import { list as strategyList, update, remove, getDefault, updateDefault, getDefaultUnbound, updateDefaultUnbound } from '@/api/peer_strategy'
   import { T } from '@/utils/i18n'
   import { useIsMobile } from '@/utils/useIsMobile'
   import MobileActions from '@/components/mobileActions.vue'
 
   const isMobile = useIsMobile()
+
+  // 未绑定设备专用默认策略的保留 peer_id，与后端 model.UnboundDefaultPeerId 一致
+  const UNBOUND_PEER_ID = '__unbound_default__'
 
   const listRes = reactive({
     list: [],
@@ -110,6 +114,7 @@
   })
 
   const defaultStrategy = ref(null)
+  const unboundDefaultStrategy = ref(null)
   const isDefaultOnly = ref(false)
 
   // 获取表格数据（默认策略 + 列表）
@@ -126,6 +131,14 @@
       defaultStrategy.value = null
     }
 
+    // 获取未绑定设备默认策略
+    const unboundRes = await getDefaultUnbound().catch(_ => false)
+    if (unboundRes && unboundRes.data) {
+      unboundDefaultStrategy.value = unboundRes.data
+    } else {
+      unboundDefaultStrategy.value = null
+    }
+
     // 获取列表
     const res = await strategyList(listQuery).catch(_ => false)
     listRes.loading = false
@@ -133,10 +146,13 @@
       listRes.list = res.data.list || []
       listRes.total = res.data.total || 0
 
-      // 组合数据：默认策略在前
+      // 组合数据：默认策略在前，未绑定设备默认策略次之
       tableData.value = []
       if (defaultStrategy.value) {
         tableData.value.push(defaultStrategy.value)
+      }
+      if (unboundDefaultStrategy.value) {
+        tableData.value.push(unboundDefaultStrategy.value)
       }
       tableData.value = tableData.value.concat(listRes.list)
     }
@@ -173,7 +189,7 @@
   // 移动端操作
   const getMobileActions = (row) => {
     const items = [{ label: T('Edit'), command: 'edit' }]
-    if (row.peer_id) {
+    if (row.peer_id && row.peer_id !== UNBOUND_PEER_ID) {
       items.push({ label: T('Delete'), command: 'delete', color: '#F56C6C' })
     }
     return items
@@ -194,6 +210,14 @@
   })
   const editConfigOptions = ref([])
   const submitting = ref(false)
+
+  // 编辑对话框中 ID 的展示文本（保留值显示为友好文案）
+  const displayEditPeerId = computed(() => {
+    if (editForm.peer_id === UNBOUND_PEER_ID) {
+      return T('UnboundDefaultStrategy')
+    }
+    return editForm.peer_id
+  })
 
   const toEdit = (row) => {
     editForm.id = row.id || 0
@@ -231,6 +255,9 @@
     if (!editForm.peer_id) {
       // 默认策略
       res = await updateDefault({ config_options: configOptions }).catch(_ => false)
+    } else if (editForm.peer_id === UNBOUND_PEER_ID) {
+      // 未绑定设备默认策略
+      res = await updateDefaultUnbound({ config_options: configOptions }).catch(_ => false)
     } else {
       // 更新普通策略
       res = await update({

@@ -554,6 +554,9 @@
   "DefaultStrategy": {
     "One": "기본 전략"
   },
+  "UnboundDefaultStrategy": {
+    "One": "기본 전략 (미바인딩)"
+  },
   "ConfigOptions": {
     "One": "구성 옵션"
   },

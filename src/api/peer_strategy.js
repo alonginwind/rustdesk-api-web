@@ -50,3 +50,17 @@ export function updateDefault (data) {
     data,
   })
 }
+
+export function getDefaultUnbound () {
+  return request({
+    url: '/peer_strategy/default_unbound',
+  })
+}
+
+export function updateDefaultUnbound (data) {
+  return request({
+    url: '/peer_strategy/default_unbound/update',
+    method: 'post',
+    data,
+  })
+}
