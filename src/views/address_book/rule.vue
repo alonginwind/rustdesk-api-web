@@ -36,10 +36,13 @@
         </el-table-column>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
         <!--        <el-table-column prop="updated_at" label="更新时间" align="center"/>-->
-        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" width="200" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 80 : 200" fixed="right">
           <template #default="{row}">
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="ruleMobileActions" @command="(cmd) => handleRuleAction(cmd, row)" />
+            <template v-else>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -55,7 +58,7 @@
       </el-pagination>
     </el-card>
     <el-dialog v-model="formVisible" :width="isMobile ? 500 : 800" :title="!formData.id?T('Create') :T('Update') " :close-on-click-modal="false">
-      <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
+      <el-form class="dialog-form" ref="form" :model="formData" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item :label="T('AddressBookName')">
           {{ props.collection.name }}
         </el-form-item>
@@ -111,8 +114,21 @@
   import { useRepositories } from '@/views/address_book/rule'
   import { onActivated, onMounted, watch } from 'vue'
   import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
   const isMobile = useIsMobile()
+
+  // Mobile action items
+  const ruleMobileActions = [
+    { label: T('Edit'), command: 'edit' },
+    { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+  ]
+  const handleRuleAction = (cmd, row) => {
+    switch (cmd) {
+      case 'edit': toEdit(row); break
+      case 'delete': del(row); break
+    }
+  }
   const props = defineProps({
     collection: {
       type: Object,

@@ -41,7 +41,7 @@
         <el-table-column prop="uuid" label="uuid" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
         <el-table-column :label="T('CloseTime')" prop="close_time" align="center"/>
-        <el-table-column :label="T('Actions')" align="center" width="150">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 100 : 150">
           <template #default="{row}">
             <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
           </template>

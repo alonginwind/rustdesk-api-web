@@ -46,17 +46,20 @@
             <el-table-column prop="alias" label="alias" align="center"></el-table-column>
             <el-table-column prop="option" label="option" align="center"></el-table-column>
             <el-table-column prop="explain" label="explain" align="center"></el-table-column>
-            <el-table-column label="actions" align="center">
+            <el-table-column label="actions" align="center" class-name="table-actions" :width="isMobile ? 80 : 240" fixed="right">
               <template #default="{row}">
-                <el-button type="success" :disabled="!canSendCmd(row.target)" @click="showCmd(row)">{{ T('Send') }}</el-button>
-                <el-button v-if="row.id" type="primary" @click="toUpdate(row)">{{ T('Edit') }}</el-button>
-                <el-button v-if="row.id" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+                <MobileActions v-if="isMobile" :items="cmdMobileActions(row)" @command="(cmd) => handleCmdAction(cmd, row)" />
+                <template v-else>
+                  <el-button type="success" :disabled="!canSendCmd(row.target)" @click="showCmd(row)">{{ T('Send') }}</el-button>
+                  <el-button v-if="row.id" type="primary" @click="toUpdate(row)">{{ T('Edit') }}</el-button>
+                  <el-button v-if="row.id" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+                </template>
               </template>
             </el-table-column>
           </el-table>
 
-          <el-dialog v-model="formVisible">
-            <el-form label-width="150">
+          <el-dialog v-model="formVisible" :width="isMobile ? '95%' : 600">
+            <el-form :label-width="isMobile ? '90px' : '150px'">
               <el-form-item label="cmd">
                 <el-input v-model="formData.cmd"></el-input>
               </el-form-item>
@@ -82,8 +85,8 @@
             </el-form>
           </el-dialog>
 
-          <el-dialog :title="T('SendCmd')" v-model="showCmdForm">
-            <el-form label-width="150" :disabled="!canSendCmd(customCmd.target)">
+          <el-dialog :title="T('SendCmd')" v-model="showCmdForm" :width="isMobile ? '95%' : 600">
+            <el-form :label-width="isMobile ? '90px' : '150px'" :disabled="!canSendCmd(customCmd.target)">
               <el-form-item label="cmd">
                 <el-input v-model="customCmd.cmd"></el-input>
               </el-form-item>
@@ -127,8 +130,32 @@
   import RelayServers from '@/views/rustdesk/relay_servers.vue'
   import mustLogin from '@/views/rustdesk/must_login.vue'
   import usage from '@/views/rustdesk/usage.vue'
+  import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
 
+  const isMobile = useIsMobile()
   const activeName = ref('Simple')
+
+  // Mobile action items
+  const cmdMobileActions = (row) => {
+    const items = [
+      { label: T('Send'), command: 'send' },
+    ]
+    if (row.id) {
+      items.push(
+        { label: T('Edit'), command: 'edit' },
+        { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+      )
+    }
+    return items
+  }
+  const handleCmdAction = (cmd, row) => {
+    switch (cmd) {
+      case 'send': showCmd(row); break
+      case 'edit': toUpdate(row); break
+      case 'delete': del(row); break
+    }
+  }
 
   const canSendIdServerCmd = ref(false)
   const checkCanSendIdServerCmd = async () => {

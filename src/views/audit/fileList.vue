@@ -65,7 +65,7 @@
         <el-table-column prop="path" :label="T('Path')" align="center" width="150" show-overflow-tooltip/>
         <el-table-column prop="uuid" label="uuid" align="center" width="120" show-overflow-tooltip/>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" min-width="120"/>
-        <el-table-column :label="T('Actions')" align="center" width="150" fixed="right">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 100 : 150" fixed="right">
           <template #default="{row}">
             <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
           </template>

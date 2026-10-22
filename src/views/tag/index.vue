@@ -50,11 +50,14 @@
           </template>
         </el-table-column>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center"/>
-        <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center"/>
-        <el-table-column :label="T('Actions')" align="center" width="250">
+        <el-table-column v-if="!isMobile" prop="updated_at" :label="T('UpdatedAt')" align="center"/>
+        <el-table-column :label="T('Actions')" align="center" class-name="table-actions" :width="isMobile ? 80 : 200" fixed="right">
           <template #default="{row}">
-            <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
-            <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            <MobileActions v-if="isMobile" :items="tagMobileActions" @command="(cmd) => handleTagAction(cmd, row)" />
+            <template v-else>
+              <el-button @click="toEdit(row)">{{ T('Edit') }}</el-button>
+              <el-button type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -70,7 +73,7 @@
       </el-pagination>
     </el-card>
     <el-dialog v-model="formVisible" :title="!formData.id?T('Create'):T('Update')" :width="isMobile ? '95%' : 800">
-      <el-form class="dialog-form" ref="form" :model="formData" label-width="120px">
+      <el-form class="dialog-form" ref="form" :model="formData" :label-width="isMobile ? '80px' : '120px'">
         <el-form-item :label="T('Owner')" prop="user_id" required>
           <el-select v-model="formData.user_id" @change="changeUserForUpdate">
             <el-option
@@ -114,7 +117,20 @@
   import { T } from '@/utils/i18n'
   import { loadAllUsers } from '@/global'
   import { useIsMobile } from '@/utils/useIsMobile'
+  import MobileActions from '@/components/mobileActions.vue'
   const isMobile = useIsMobile()
+
+  // Mobile action items
+  const tagMobileActions = [
+    { label: T('Edit'), command: 'edit' },
+    { label: T('Delete'), command: 'delete', divided: true, color: '#F56C6C' },
+  ]
+  const handleTagAction = (cmd, row) => {
+    switch (cmd) {
+      case 'edit': toEdit(row); break
+      case 'delete': del(row); break
+    }
+  }
 
   const { allUsers, getAllUsers } = loadAllUsers()
   onMounted(getAllUsers)

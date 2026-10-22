@@ -38,7 +38,7 @@
             <el-tag :type="expired(row)?'info':'success'">{{ row.expired_at ? new Date(row.expired_at * 1000).toLocaleString() : '-' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column :label="T('Actions')" align="center" width="400">
+        <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 100 : 400">
           <template #default="{row}">
             <el-button type="danger" @click="del(row)">{{ T('Logout') }}</el-button>
           </template>

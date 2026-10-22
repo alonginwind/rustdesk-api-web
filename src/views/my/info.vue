@@ -20,7 +20,7 @@
                 <el-tag v-else type="danger">{{ T('NoBind') }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column :label="T('Actions')" align="center" width="200">
+            <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 120 : 200">
               <template #default="{ row }">
                 <el-button v-if="row.status === 1" type="danger" size="small" @click="toUnBind(row)">{{ T('UnBind') }}</el-button>
                 <el-button v-else type="success" size="small" @click="toBind(row)">{{ T('ToBind') }}</el-button>
@@ -47,8 +47,10 @@
   import { ElMessageBox } from 'element-plus'
   import { T } from '@/utils/i18n'
   import { marked } from 'marked'
+  import { useIsMobile } from '@/utils/useIsMobile'
 
   const appStore = useAppStore()
+  const isMobile = useIsMobile()
   const userStore = useUserStore()
   const changePwdVisible = ref(false)
   const showChangePwd = () => {
