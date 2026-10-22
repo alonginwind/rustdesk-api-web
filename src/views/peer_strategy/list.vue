@@ -16,6 +16,7 @@
         <el-table-column prop="peer_id" label="ID" align="center" width="200">
           <template #default="{row}">
             <span v-if="row.peer_id === UNBOUND_PEER_ID">{{ T('UnboundDefaultStrategy') }}</span>
+            <span v-else-if="row.peer_id === MC_PEER_ID">{{ T('ClientStrategy') }}</span>
             <span v-else-if="row.peer_id">{{ row.peer_id }}</span>
             <span v-else>{{ T('DefaultStrategy') }}</span>
           </template>
@@ -43,7 +44,7 @@
             <MobileActions v-if="isMobile" :items="getMobileActions(row)" @command="(cmd) => handleAction(cmd, row)" />
             <template v-else>
               <el-button type="primary" @click="toEdit(row)">{{ T('Edit') }}</el-button>
-              <el-button v-if="row.peer_id && row.peer_id !== UNBOUND_PEER_ID" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
+              <el-button v-if="row.peer_id && row.peer_id !== UNBOUND_PEER_ID && row.peer_id !== MC_PEER_ID" type="danger" @click="del(row)">{{ T('Delete') }}</el-button>
             </template>
           </template>
         </el-table-column>
@@ -92,7 +93,7 @@
   import { onMounted, reactive, ref, computed, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { Delete, Plus } from '@element-plus/icons-vue'
-  import { list as strategyList, update, remove, getDefault, updateDefault, getDefaultUnbound, updateDefaultUnbound } from '@/api/peer_strategy'
+  import { list as strategyList, update, remove, getDefault, updateDefault, getDefaultUnbound, updateDefaultUnbound, getDefaultMC, updateDefaultMC } from '@/api/peer_strategy'
   import { T } from '@/utils/i18n'
   import { useIsMobile } from '@/utils/useIsMobile'
   import MobileActions from '@/components/mobileActions.vue'
@@ -101,6 +102,8 @@
 
   // 未绑定设备专用默认策略的保留 peer_id，与后端 model.UnboundDefaultPeerId 一致
   const UNBOUND_PEER_ID = '__unbound_default__'
+  // 主控端策略的保留 peer_id，与后端 model.McDefaultPeerId 一致
+  const MC_PEER_ID = '__mc_default__'
 
   const listRes = reactive({
     list: [],
@@ -115,6 +118,7 @@
 
   const defaultStrategy = ref(null)
   const unboundDefaultStrategy = ref(null)
+  const mcDefaultStrategy = ref(null)
   const isDefaultOnly = ref(false)
 
   // 获取表格数据（默认策略 + 列表）
@@ -139,6 +143,14 @@
       unboundDefaultStrategy.value = null
     }
 
+    // 获取主控端策略
+    const mcRes = await getDefaultMC().catch(_ => false)
+    if (mcRes && mcRes.data) {
+      mcDefaultStrategy.value = mcRes.data
+    } else {
+      mcDefaultStrategy.value = null
+    }
+
     // 获取列表
     const res = await strategyList(listQuery).catch(_ => false)
     listRes.loading = false
@@ -146,13 +158,16 @@
       listRes.list = res.data.list || []
       listRes.total = res.data.total || 0
 
-      // 组合数据：默认策略在前，未绑定设备默认策略次之
+      // 组合数据：默认策略在前，未绑定设备默认策略、主控端策略次之
       tableData.value = []
       if (defaultStrategy.value) {
         tableData.value.push(defaultStrategy.value)
       }
       if (unboundDefaultStrategy.value) {
         tableData.value.push(unboundDefaultStrategy.value)
+      }
+      if (mcDefaultStrategy.value) {
+        tableData.value.push(mcDefaultStrategy.value)
       }
       tableData.value = tableData.value.concat(listRes.list)
     }
@@ -189,7 +204,7 @@
   // 移动端操作
   const getMobileActions = (row) => {
     const items = [{ label: T('Edit'), command: 'edit' }]
-    if (row.peer_id && row.peer_id !== UNBOUND_PEER_ID) {
+    if (row.peer_id && row.peer_id !== UNBOUND_PEER_ID && row.peer_id !== MC_PEER_ID) {
       items.push({ label: T('Delete'), command: 'delete', color: '#F56C6C' })
     }
     return items
@@ -215,6 +230,9 @@
   const displayEditPeerId = computed(() => {
     if (editForm.peer_id === UNBOUND_PEER_ID) {
       return T('UnboundDefaultStrategy')
+    }
+    if (editForm.peer_id === MC_PEER_ID) {
+      return T('ClientStrategy')
     }
     return editForm.peer_id
   })
@@ -258,6 +276,9 @@
     } else if (editForm.peer_id === UNBOUND_PEER_ID) {
       // 未绑定设备默认策略
       res = await updateDefaultUnbound({ config_options: configOptions }).catch(_ => false)
+    } else if (editForm.peer_id === MC_PEER_ID) {
+      // 主控端策略
+      res = await updateDefaultMC({ config_options: configOptions }).catch(_ => false)
     } else {
       // 更新普通策略
       res = await update({

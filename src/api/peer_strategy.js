@@ -64,3 +64,17 @@ export function updateDefaultUnbound (data) {
     data,
   })
 }
+
+export function getDefaultMC () {
+  return request({
+    url: '/peer_strategy/default_mc',
+  })
+}
+
+export function updateDefaultMC (data) {
+  return request({
+    url: '/peer_strategy/default_mc/update',
+    method: 'post',
+    data,
+  })
+}

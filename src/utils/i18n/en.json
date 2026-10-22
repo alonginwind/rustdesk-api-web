@@ -571,6 +571,9 @@
   "UnboundDefaultStrategy": {
     "One": "Default Strategy (Unbound)"
   },
+  "ClientStrategy": {
+    "One": "Client Strategy"
+  },
   "ConfigOptions": {
     "One": "Config Options"
   },

@@ -557,6 +557,9 @@
   "UnboundDefaultStrategy": {
     "One": "未绑策略"
   },
+  "ClientStrategy": {
+    "One": "主控策略"
+  },
   "ConfigOptions": {
     "One": "配置选项"
   },

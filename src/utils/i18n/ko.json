@@ -557,6 +557,9 @@
   "UnboundDefaultStrategy": {
     "One": "기본 전략 (미바인딩)"
   },
+  "ClientStrategy": {
+    "One": "클라이언트 전략"
+  },
   "ConfigOptions": {
     "One": "구성 옵션"
   },

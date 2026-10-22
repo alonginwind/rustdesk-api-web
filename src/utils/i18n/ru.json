@@ -571,6 +571,9 @@
   "UnboundDefaultStrategy": {
     "One": "Стратегия по умолчанию (не привязано)"
   },
+  "ClientStrategy": {
+    "One": "Стратегия клиента"
+  },
   "ConfigOptions": {
     "One": "Параметры конфигурации"
   },
