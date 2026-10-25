@@ -674,5 +674,7 @@
   "PkceEnable": { "One": "PKCE включён" },
   "PkceMethod": { "One": "Метод PKCE" },
   "Your IdP Name": { "One": "Имя вашего IdP" },
-  "InvalidParam": { "One": "Недопустимый параметр: {param}" }
+  "InvalidParam": { "One": "Недопустимый параметр: {param}" },
+  "ShowTabs": { "One": "Показать вкладки" },
+  "HideTabs": { "One": "Скрыть вкладки" }
 }

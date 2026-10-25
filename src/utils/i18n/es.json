@@ -674,5 +674,7 @@
   "PkceEnable": { "One": "PKCE activado" },
   "PkceMethod": { "One": "Método PKCE" },
   "Your IdP Name": { "One": "Nombre de tu IdP" },
-  "InvalidParam": { "One": "Parámetro no válido: {param}" }
+  "InvalidParam": { "One": "Parámetro no válido: {param}" },
+  "ShowTabs": { "One": "Mostrar pestañas" },
+  "HideTabs": { "One": "Ocultar pestañas" }
 }
