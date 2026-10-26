@@ -660,5 +660,7 @@
   "PkceEnable": { "One": "PKCE 啟用" },
   "PkceMethod": { "One": "PKCE 方式" },
   "Your IdP Name": { "One": "你的 IdP 名稱" },
-  "InvalidParam": { "One": "參數 {param} 無效" }
+  "InvalidParam": { "One": "參數 {param} 無效" },
+  "ShowTabs": { "One": "顯示分頁列" },
+  "HideTabs": { "One": "隱藏分頁列" }
 }

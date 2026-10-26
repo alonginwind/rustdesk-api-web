@@ -660,5 +660,7 @@
   "PkceEnable": { "One": "PKCE 사용" },
   "PkceMethod": { "One": "PKCE 방식" },
   "Your IdP Name": { "One": "IdP 이름" },
-  "InvalidParam": { "One": "잘못된 매개변수: {param}" }
+  "InvalidParam": { "One": "잘못된 매개변수: {param}" },
+  "ShowTabs": { "One": "탭 표시" },
+  "HideTabs": { "One": "탭 숨기기" }
 }

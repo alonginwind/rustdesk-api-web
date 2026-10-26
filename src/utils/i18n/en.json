@@ -674,5 +674,7 @@
   "PkceEnable": { "One": "PKCE Enabled" },
   "PkceMethod": { "One": "PKCE Method" },
   "Your IdP Name": { "One": "Your IdP Name" },
-  "InvalidParam": { "One": "Invalid parameter: {param}" }
+  "InvalidParam": { "One": "Invalid parameter: {param}" },
+  "ShowTabs": { "One": "Show Tabs" },
+  "HideTabs": { "One": "Hide Tabs" }
 }
