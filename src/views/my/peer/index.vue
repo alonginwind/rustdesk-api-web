@@ -51,14 +51,15 @@
         <el-table-column prop="username" :label="T('Username')" align="center" width="120"/>
         <!--    <el-table-column prop="uuid" :label="T('Uuid')" align="center" width="120" show-overflow-tooltip/>-->
         <el-table-column prop="version" :label="T('Version')" align="center" width="80"/>
-        <!--    <el-table-column prop="alias" :label="T('Alias')" align="center" width="80"/>-->
+        <el-table-column :label="T('BookAliases')" width="240"><template #default="{row}"><PeerBookAliases :peer="row" /></template></el-table-column>
+        <el-table-column :label="T('ConnectionAddress')" width="220"><template #default="{row}"><PeerConnectionAddress :peer="row" scope="my" @saved="getList" /></template></el-table-column>
         <el-table-column prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
         <!--    <el-table-column prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>-->
         <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 80 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
             <MobileActions v-if="isMobile" :items="myPeerMobileActions(row)" @command="(cmd) => handleMyPeerAction(cmd, row)" />
             <template v-else>
-              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button type="success" @click="connectByClient(connectionAddress(row))">{{ T('Link') }}</el-button>
               <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
               <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
               <el-button @click="toView(row)">{{ T('View') }}</el-button>
@@ -106,69 +107,16 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="ABFormVisible" :width="isMobile ? 500 : 800" :title="T('Create')">
-      <el-form class="dialog-form" ref="form" :model="ABFormData" label-width="120px">
-        <el-form-item :label="T('AddressBookName')" required prop="collection_id">
-          <el-select v-model="ABFormData.collection_id" clearable @change="onCollectionChange">
-            <el-option v-for="c in collectionListResForUpdate.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="ID" prop="id" required>
-          <el-input v-model="ABFormData.id" disabled></el-input>
-        </el-form-item>
-        <el-form-item :label="T('Username')" prop="username">
-          <el-input v-model="ABFormData.username"></el-input>
-        </el-form-item>
-        <el-form-item :label="T('Alias')" prop="alias" required>
-          <el-input v-model="ABFormData.alias"></el-input>
-        </el-form-item>
-        <el-form-item :label="T('Hostname')" prop="hostname">
-          <el-input v-model="ABFormData.hostname"></el-input>
-        </el-form-item>
-        <el-form-item :label="T('Platform')" prop="platform">
-          <el-select v-model="ABFormData.platform">
-            <el-option
-                v-for="item in ABPlatformList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item :label="T('Tags')" prop="tags">
-          <el-select v-model="ABFormData.tags" multiple>
-            <el-option
-                v-for="item in tagListRes.list"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button @click="ABFormVisible = false">{{ T('Cancel') }}</el-button>
-          <el-button @click="submitABForm" type="primary">{{ T('Submit') }}</el-button>
-        </el-form-item>
-      </el-form>
+    <el-dialog v-model="ABFormVisible" :width="isMobile ? '95%' : 650" :title="T('AddToAddressBook')" destroy-on-close>
+      <CreateABForm :peer="selectedPeer" scope="my" @cancel="ABFormVisible = false" @success="ABFormVisible = false; getList()" />
     </el-dialog>
 
     <el-dialog v-model="batchABFormVisible" :width="isMobile ? '95%' : 800" :title="T('Create')">
       <el-form class="dialog-form" ref="form" :model="batchABFormData" label-width="120px">
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
-          <el-select v-model="batchABFormData.collection_id" clearable @change="changeCollectionForBatchCreateAB">
+          <el-select v-model="batchABFormData.collection_ids" multiple>
             <el-option :value="0" :label="T('MyAddressBook')"></el-option>
             <el-option v-for="c in collectionListResForUpdate.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="T('Tags')" prop="tags">
-          <el-select v-model="batchABFormData.tags" multiple>
-            <el-option
-                v-for="item in tagListRes.list"
-                :key="item.name"
-                :label="item.name"
-                :value="item.name"
-            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -188,7 +136,11 @@
   import { T } from '@/utils/i18n'
   import { timeAgo } from '@/utils/time'
   import { jsonToCsv, downBlob } from '@/utils/file'
-  import { useRepositories as useABRepositories } from '@/views/address_book/index'
+  import { useRepositories as useCollectionRepositories } from '@/views/address_book/collection'
+  import CreateABForm from '@/views/peer/createABForm.vue'
+  import PeerBookAliases from '@/components/peerBookAliases.vue'
+  import PeerConnectionAddress from '@/components/peerConnectionAddress.vue'
+  import { connectionAddress } from '@/utils/peerBooks.mjs'
   import { useAppStore } from '@/store/app'
   import { connectByClient } from '@/utils/peer'
   import { CopyDocument } from '@element-plus/icons'
@@ -320,29 +272,11 @@
     }
   }
 
-  const onCollectionChange = (val) => {
-    if (val > 0) {
-      ABFormData.user_id = 1
-    }
-    changeCollectionForUpdate(val)
-  }
-
-  const {
-    platformList: ABPlatformList,
-    formVisible: ABFormVisible,
-    formData: ABFormData,
-    collectionListResForUpdate,
-    getCollectionSharedForUpdate,
-    tagListRes,
-    changeCollectionForUpdate,
-    submit: ABSubmit,
-    fromPeer,
-  } = useABRepositories('my')
-  onMounted(getCollectionSharedForUpdate)
-  const toAddressBook = (peer) => {
-    fromPeer(peer)
-    ABFormVisible.value = true
-  }
+  const ABFormVisible = ref(false)
+  const selectedPeer = ref({})
+  const { listRes: collectionListResForUpdate, getList: getMyCollections } = useCollectionRepositories('my')
+  onMounted(getMyCollections)
+  const toAddressBook = (peer) => { selectedPeer.value = peer; ABFormVisible.value = true }
 
   const multipleSelection = ref([])
   const handleSelectionChange = (val) => {
@@ -374,14 +308,10 @@
     batchABFormVisible.value = true
   }
   const batchABFormData = ref({
-    collection_id: 0,
+    collection_ids: [],
     tags: [],
     peer_ids: [],
   })
-  const changeCollectionForBatchCreateAB = (val) => {
-    batchABFormData.value.tags = []
-    changeCollectionForUpdate(val)
-  }
   const submitBatchAddToAB = async () => {
     if (multipleSelection.value.length === 0) {
       ElMessage.warning(T('PleaseSelectData'))
@@ -397,23 +327,8 @@
     if (res) {
       ElMessage.success(T('OperationSuccess'))
       batchABFormVisible.value = false
+      getList()
     }
-  }
-  const submitABForm = async () => {
-    if (!ABFormData.collection_id) {
-      ElMessage.error(T('ParamRequired', { param: T('AddressBookName') }))
-      return
-    }
-    if (!ABFormData.alias) {
-      ElMessage.error(T('ParamRequired', { param: T('Alias') }))
-      return
-    }
-    if (!ABFormData.id) {
-      ElMessage.error(T('ParamRequired', { param: 'ID' }))
-      return
-    }
-    await ABSubmit()
-    getList()
   }
 
 

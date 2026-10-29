@@ -676,5 +676,11 @@
   "Your IdP Name": { "One": "Nom de votre IdP" },
   "InvalidParam": { "One": "Paramètre invalide : {param}" },
   "ShowTabs": { "One": "Afficher les onglets" },
-  "HideTabs": { "One": "Masquer les onglets" }
+  "HideTabs": { "One": "Masquer les onglets" },
+  "ConnectionAddress": {"One": "Connection address"},
+  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
+  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
+  "BookAliases": {"One": "Aliases in address books"},
+  "LinkedDevice": {"One": "Linked device"},
+  "UnlinkedContact": {"One": "Standalone contact"}
 }
