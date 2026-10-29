@@ -662,5 +662,11 @@
   "Your IdP Name": { "One": "IdP 이름" },
   "InvalidParam": { "One": "잘못된 매개변수: {param}" },
   "ShowTabs": { "One": "탭 표시" },
-  "HideTabs": { "One": "탭 숨기기" }
+  "HideTabs": { "One": "탭 숨기기" },
+  "ConnectionAddress": {"One": "Connection address"},
+  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
+  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
+  "BookAliases": {"One": "Aliases in address books"},
+  "LinkedDevice": {"One": "Linked device"},
+  "UnlinkedContact": {"One": "Standalone contact"}
 }

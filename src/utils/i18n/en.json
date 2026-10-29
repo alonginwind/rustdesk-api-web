@@ -479,7 +479,7 @@
     "One": "Email"
   },
   "MyPeer": {
-    "One": "My Peer"
+    "One": "My devices"
   },
   "View": {
     "One": "View"
@@ -676,5 +676,11 @@
   "Your IdP Name": { "One": "Your IdP Name" },
   "InvalidParam": { "One": "Invalid parameter: {param}" },
   "ShowTabs": { "One": "Show Tabs" },
-  "HideTabs": { "One": "Hide Tabs" }
+  "HideTabs": { "One": "Hide Tabs" },
+  "ConnectionAddress": {"One": "Connection address"},
+  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
+  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
+  "BookAliases": {"One": "Aliases in address books"},
+  "LinkedDevice": {"One": "Linked device"},
+  "UnlinkedContact": {"One": "Standalone contact"}
 }

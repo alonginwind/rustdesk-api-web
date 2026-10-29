@@ -113,16 +113,17 @@
           </el-table-column>
           <el-table-column v-if="c.name==='uuid' && !isMobile" prop="uuid" :label="T('Uuid')" align="center" width="100" show-overflow-tooltip/>
           <el-table-column v-if="c.name==='version'" prop="version" :label="T('Version')" align="center" width="80"/>
-          <el-table-column v-if="c.name==='alias'" prop="alias" :label="T('Alias')" align="center" width="240" show-overflow-tooltip/>
+          <el-table-column v-if="c.name==='alias'" :label="T('BookAliases')" align="center" width="240"><template #default="{row}"><PeerBookAliases :peer="row" /></template></el-table-column>
           <el-table-column v-if="c.name==='created_at' && !isMobile" prop="created_at" :label="T('CreatedAt')" align="center" width="150"/>
           <el-table-column v-if="c.name==='updated_at' && !isMobile" prop="updated_at" :label="T('UpdatedAt')" align="center" width="150"/>
         </template>
 
+        <el-table-column :label="T('ConnectionAddress')" width="220"><template #default="{row}"><PeerConnectionAddress :peer="row" @saved="getList" /></template></el-table-column>
         <el-table-column :label="T('Actions')" align="center" :width="isMobile ? 80 : 500" class-name="table-actions" fixed="right">
           <template #default="{row}">
             <MobileActions v-if="isMobile" :items="peerMobileActions(row)" @command="(cmd) => handlePeerAction(cmd, row)" />
             <template v-else>
-              <el-button type="success" @click="connectByClient(row.id)">{{ T('Link') }}</el-button>
+              <el-button type="success" @click="connectByClient(connectionAddress(row))">{{ T('Link') }}</el-button>
               <el-button v-if="appStore.setting.appConfig.web_client" type="success" @click="toWebClientLink(row)">Web Client</el-button>
               <el-button type="primary" @click="toAddressBook(row)">{{ T('AddToAddressBook') }}</el-button>
               <el-button @click="toView(row)">{{ T('View') }}</el-button>
@@ -234,7 +235,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="T('AddressBookName')" required prop="collection_id">
-          <el-select v-model="batchABFormData.collection_id" clearable>
+          <el-select v-model="batchABFormData.collection_ids" multiple>
             <el-option :value="0" :label="T('MyAddressBook')"></el-option>
             <el-option v-for="c in collectionListResForBatchCreateAB.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
           </el-select>
@@ -291,6 +292,9 @@
   import { jsonToCsv, downBlob } from '@/utils/file'
   import { loadAllUsers } from '@/global'
   import { useAppStore } from '@/store/app'
+  import PeerBookAliases from '@/components/peerBookAliases.vue'
+  import PeerConnectionAddress from '@/components/peerConnectionAddress.vue'
+  import { connectionAddress } from '@/utils/peerBooks.mjs'
   import { connectByClient } from '@/utils/peer'
   import { ArrowDown, ArrowUp, CopyDocument, Setting } from '@element-plus/icons'
   import { handleClipboard } from '@/utils/clipboard'
@@ -321,7 +325,7 @@
   }
   const handlePeerAction = (cmd, row) => {
     switch (cmd) {
-      case 'link': connectByClient(row.id); break
+      case 'link': connectByClient(connectionAddress(row)); break
       case 'webClient': toWebClientLink(row); break
       case 'addToAB': toAddressBook(row); break
       case 'view': toView(row); break
@@ -595,7 +599,7 @@
   } = useCollectionRepositories('admin')
   collectionListQueryForBatchCreateAB.page_size = 9999
   const changeUserForBatchCreateAB = (val) => {
-    batchABFormData.value.collection_id = 0
+    batchABFormData.value.collection_ids = []
     collectionListQueryForBatchCreateAB.user_id = val
     getCollectionListForBatchCreateAB()
   }
@@ -604,7 +608,7 @@
     batchABFormVisible.value = true
   }
   const batchABFormData = ref({
-    collection_id: 0,
+    collection_ids: [],
     tags: [],
     peer_ids: [],
     user_id: null,
@@ -614,6 +618,7 @@
       ElMessage.warning(T('PleaseSelectData'))
       return false
     }
+    if (!batchABFormData.value.collection_ids.length || !batchABFormData.value.user_id) { ElMessage.warning(T('PleaseSelectData')); return false }
     batchABFormData.value.peer_ids = multipleSelection.value.map(i => i.row_id)
     if (!batchABFormData.value.peer_ids.length) {
       ElMessage.warning(T('PleaseSelectData'))
@@ -624,6 +629,7 @@
     if (res) {
       ElMessage.success(T('OperationSuccess'))
       batchABFormVisible.value = false
+      getList()
     }
   }
   // 批量添加到地址簿 end
