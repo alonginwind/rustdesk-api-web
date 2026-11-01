@@ -29,7 +29,7 @@ const path = require('node:path')
     ] }
     if (endpoint === '/user/current') data = { username: 'fixture-owner', is_admin: true, route_names: ['*'], token: 'synthetic-browser-test' }
     else if (endpoint === '/config/admin') data = { title: 'RustDesk — тест разработки', hello: '' }
-    else if (endpoint === '/config/app') data = { web_client: 0 }
+    else if (endpoint === '/config/app') data = { web_client: 0, device_address_books: true }
     else if (endpoint === '/config/server') data = { id_server: '', key: '', api_server: '' }
     else if (endpoint === '/user/list') data = { list: [{ id: 1, username: 'fixture-owner' }], total: 1 }
     else if (endpoint.endsWith('/peer/list')) data = { list: hideMyDevices && endpoint.startsWith('/my/') ? [] : [peer], total: hideMyDevices && endpoint.startsWith('/my/') ? 0 : 1 }

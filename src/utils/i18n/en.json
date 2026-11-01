@@ -478,8 +478,11 @@
   "Email": {
     "One": "Email"
   },
-  "MyPeer": {
+  "MyDevices": {
     "One": "My devices"
+  },
+  "MyPeer": {
+    "One": "My Peer"
   },
   "View": {
     "One": "View"
