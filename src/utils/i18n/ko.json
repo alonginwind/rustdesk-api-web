@@ -671,5 +671,13 @@
   "CopyToBooksHelp": { "One": "선택한 주소록에 항목을 추가하고 기존 항목은 유지합니다. 주소록마다 고유한 주소와 별명을 지정할 수 있습니다." },
   "BookAliases": { "One": "주소록 별명" },
   "LinkedDevice": { "One": "연결된 장치" },
-  "UnlinkedContact": { "One": "독립 연락처" }
+  "UnlinkedContact": { "One": "독립 연락처" },
+  "SessionSettings": {"One": "Session settings"},
+  "SessionConfigUnavailable": {"One": "Session configuration is unavailable. Reload or update the backend."},
+  "SessionConfigEnv": {"One": "The session lifetime is managed by an environment variable. This file setting is read-only."},
+  "SessionConfigReadOnly": {"One": "The configuration is read-only. The deployment administrator must grant write access before saving."},
+  "SessionLifetime": {"One": "Session lifetime"},
+  "SessionConfigHelp": {"One": "Changes only app.token-expire in the existing configuration. For example, 720h is 30 days, 168h is seven days; h, m and s are supported."},
+  "SessionEffective": {"One": "Effective lifetime"},
+  "SessionChangeHelp": {"One": "The new value applies to new and renewed sessions. Automatic renewal happens in the last third of the lifetime. Existing expired or manually revoked sessions stay invalid; manual revocation is available under Login tokens."}
 }
