@@ -1,3 +1,4 @@
+import { deviceAddressBooksEnabled } from '@/utils/peerBooks.mjs'
 import en from '@/utils/i18n/en.json'
 import fr from '@/utils/i18n/fr.json'
 import zhCN from '@/utils/i18n/zh_CN.json'
@@ -19,6 +20,7 @@ const trans = {
 export function T (key, params, num = 0) {
   const appStore = useAppStore()
   const lang = appStore.setting.lang
+  if (key === 'MyPeer' && deviceAddressBooksEnabled(appStore.setting.appConfig) && trans[lang]?.MyDevices) key = 'MyDevices'
   const tran = trans[lang]?.[key]
   if (!tran) {
     return key

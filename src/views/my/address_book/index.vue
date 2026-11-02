@@ -35,7 +35,7 @@
     <el-card class="list-body" shadow="hover">
       <el-table :data="listRes.list" v-loading="listRes.loading" border @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="50" align="center"></el-table-column>
-        <el-table-column prop="id" label="ID" align="center" width="200">
+        <el-table-column prop="id" :label="deviceAddressBooksEnabled(appStore.setting.appConfig) ? T('ConnectionAddress') : 'ID'" align="center" width="200">
           <template #default="{row}">
             <div>
               <PlatformIcons :name="platformList.find(p=>p.label===row.platform)?.icon" style="width: 20px;height: 20px;display: inline-block" color="var(--basicBlack)"/>
@@ -93,7 +93,14 @@
             <el-option v-for="c in collectionListResForUpdate.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="ID" prop="id" required>
+        <el-form-item v-if="deviceAddressBooksEnabled(appStore.setting.appConfig)" :label="T('LinkedDevice')">
+          <el-select v-model="formData.peer_row_id" filterable style="width: 100%">
+            <el-option v-if="!formData.peer_row_id" :value="0" :label="T('UnlinkedContact')" />
+            <el-option v-if="formData.peer_row_id && !deviceOptions.some(d => d.row_id === formData.peer_row_id)" :value="formData.peer_row_id" :label="formData.hostname || formData.alias || T('LinkedDevice')" />
+            <el-option v-for="device in deviceOptions" :key="device.row_id" :value="device.row_id" :label="`${device.hostname || device.id} · ${device.id}`" />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="deviceAddressBooksEnabled(appStore.setting.appConfig) ? T('ConnectionAddress') : 'ID'" prop="id" required>
           <el-input v-model="formData.id"></el-input>
         </el-form-item>
         <el-form-item :label="T('Username')" prop="username">
@@ -186,6 +193,7 @@
 </template>
 
 <script setup>
+import { deviceAddressBooksEnabled } from '@/utils/peerBooks.mjs'
   import { onActivated, onMounted, reactive, ref, watch } from 'vue'
   import { useBatchUpdateTagsRepositories, useRepositories } from '@/views/address_book'
   import { toWebClientLink } from '@/utils/webclient'
@@ -244,6 +252,7 @@
     formVisible,
     platformList,
     formData,
+    deviceOptions,
     toEdit,
     toAdd,
     submit,

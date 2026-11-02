@@ -662,5 +662,11 @@
   "Your IdP Name": { "One": "你的 IdP 名稱" },
   "InvalidParam": { "One": "參數 {param} 無效" },
   "ShowTabs": { "One": "顯示分頁列" },
-  "HideTabs": { "One": "隱藏分頁列" }
+  "HideTabs": { "One": "隱藏分頁列" },
+  "ConnectionAddress": {"One": "Connection address"},
+  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
+  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
+  "BookAliases": {"One": "Aliases in address books"},
+  "LinkedDevice": {"One": "Linked device"},
+  "UnlinkedContact": {"One": "Standalone contact"}
 }

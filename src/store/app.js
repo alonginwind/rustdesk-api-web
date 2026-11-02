@@ -41,8 +41,10 @@ export const useAppStore = defineStore({
       langs: langs,
       lang: defaultLang,
       locale: langs[defaultLang] ? langs[defaultLang] : langs['en'],
+      appConfigLoaded: false,
       appConfig: {
         web_client: 1,
+        device_address_books: false,
       },
       rustdeskConfig: {
         'id_server': '',
@@ -79,6 +81,10 @@ export const useAppStore = defineStore({
       console.log('getAppConfig')
       return app().then(res => {
         this.setting.appConfig = res.data
+        this.setting.appConfigLoaded = true
+      }).catch(() => {
+        this.setting.appConfig = { web_client: 0, device_address_books: false }
+        this.setting.appConfigLoaded = true
       })
     },
     getAdminConfig () {

@@ -1,3 +1,7 @@
+import { list as adminPeers } from '@/api/peer'
+import { list as myPeers } from '@/api/my/peer'
+import { useAppStore } from '@/store/app'
+import { connectionAddress, deviceAddressBooksEnabled } from '@/utils/peerBooks.mjs'
 import { reactive, ref } from 'vue'
 import { create as admin_create, list as admin_list, remove as admin_remove, update as admin_update } from '@/api/address_book'
 import { batchUpdateTags, list as my_list, create as my_create, update as my_update, remove as my_remove } from '@/api/my/address_book'
@@ -13,6 +17,7 @@ const apis = {
 }
 
 export function useRepositories (api_type = 'my') {
+  const enhanced = () => deviceAddressBooksEnabled(useAppStore().setting.appConfig)
   const {
     listRes: collectionListRes,
     listQuery: collectionListQuery,
@@ -91,6 +96,7 @@ export function useRepositories (api_type = 'my') {
   const formVisible = ref(false)
   const formData = reactive({
     'row_id': 0,
+    'peer_row_id': 0,
     'alias': '',
     'forceAlwaysRelay': false,
     'hash': '',
@@ -123,7 +129,14 @@ export function useRepositories (api_type = 'my') {
   } = useTagRepositories(api_type)
   tagListQuery.page_size = 9999
 
+  const deviceOptions = ref([])
+  const loadDevices = async () => {
+    if (!enhanced()) return
+    const result = await (api_type === 'admin' ? adminPeers : myPeers)({ page: 1, page_size: 1000 }).catch(() => false)
+    if (result) deviceOptions.value = result.data.list || []
+  }
   const toEdit = (row) => {
+    loadDevices()
     formVisible.value = true
     //将row中的数据赋值给formData
     Object.keys(formData).forEach(key => {
@@ -136,9 +149,11 @@ export function useRepositories (api_type = 'my') {
 
   }
   const toAdd = () => {
+    loadDevices()
     formVisible.value = true
     //重置formData
     formData.row_id = 0
+    formData.peer_row_id = 0
     formData.alias = ''
     formData.forceAlwaysRelay = false
     formData.hash = ''
@@ -158,7 +173,10 @@ export function useRepositories (api_type = 'my') {
   }
   const submit = async () => {
     const api = formData.row_id ? apis[api_type].update : apis[api_type].create
-    const res = await api(formData).catch(_ => false)
+    const payload = { ...formData }
+    if (!enhanced()) delete payload.peer_row_id
+    if (!enhanced() && api_type === 'my' && !formData.row_id) delete payload.user_id
+    const res = await api(payload).catch(_ => false)
     if (res) {
       ElMessage.success(T('OperationSuccess'))
       formVisible.value = false
@@ -196,7 +214,8 @@ export function useRepositories (api_type = 'my') {
   }
 
   const fromPeer = (peer) => {
-    formData.id = peer.id
+    formData.id = enhanced() ? connectionAddress(peer) : peer.id
+    formData.peer_row_id = enhanced() ? peer.row_id : 0
     formData.username = peer.username
     formData.hostname = peer.hostname
     //匹配os
@@ -213,6 +232,7 @@ export function useRepositories (api_type = 'my') {
   }
 
   return {
+    deviceOptions,
     listRes,
     listQuery,
     getList,
