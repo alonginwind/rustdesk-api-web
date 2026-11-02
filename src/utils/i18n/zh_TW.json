@@ -464,6 +464,9 @@
   "Email": {
     "One": "電子信箱"
   },
+  "MyDevices": {
+    "One": "我的裝置"
+  },
   "MyPeer": {
     "One": "我的裝置"
   },
@@ -663,10 +666,10 @@
   "InvalidParam": { "One": "參數 {param} 無效" },
   "ShowTabs": { "One": "顯示分頁列" },
   "HideTabs": { "One": "隱藏分頁列" },
-  "ConnectionAddress": {"One": "Connection address"},
-  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
-  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
-  "BookAliases": {"One": "Aliases in address books"},
-  "LinkedDevice": {"One": "Linked device"},
-  "UnlinkedContact": {"One": "Standalone contact"}
+  "ConnectionAddress": { "One": "連線地址" },
+  "ConnectionAddressHelp": { "One": "僅在新增地址簿項目時使用，既有項目的地址保持不變。留空則使用 RustDesk ID。" },
+  "CopyToBooksHelp": { "One": "將項目新增到所選地址簿，並保留既有項目。每個地址簿都可以單獨設定地址和別名。" },
+  "BookAliases": { "One": "地址簿中的別名" },
+  "LinkedDevice": { "One": "關聯裝置" },
+  "UnlinkedContact": { "One": "獨立聯絡人" }
 }

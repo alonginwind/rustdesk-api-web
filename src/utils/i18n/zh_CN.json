@@ -464,6 +464,9 @@
   "Email": {
     "One": "邮箱"
   },
+  "MyDevices": {
+    "One": "我的设备"
+  },
   "MyPeer": {
     "One": "我的设备"
   },
@@ -663,10 +666,10 @@
   "InvalidParam": { "One": "参数 {param} 无效" },
   "ShowTabs": { "One": "显示标签栏" },
   "HideTabs": { "One": "隐藏标签栏" },
-  "ConnectionAddress": {"One": "Connection address"},
-  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
-  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
-  "BookAliases": {"One": "Aliases in address books"},
-  "LinkedDevice": {"One": "Linked device"},
-  "UnlinkedContact": {"One": "Standalone contact"}
+  "ConnectionAddress": { "One": "连接地址" },
+  "ConnectionAddressHelp": { "One": "仅在新增地址簿条目时使用，已有条目的地址保持不变。留空则使用 RustDesk ID。" },
+  "CopyToBooksHelp": { "One": "将条目添加到所选地址簿，并保留已有条目。每个地址簿都可以单独设置地址和别名。" },
+  "BookAliases": { "One": "地址簿中的别名" },
+  "LinkedDevice": { "One": "关联设备" },
+  "UnlinkedContact": { "One": "独立联系人" }
 }

@@ -464,6 +464,9 @@
   "Email": {
     "One": "이메일"
   },
+  "MyDevices": {
+    "One": "내 장치"
+  },
   "MyPeer": {
     "One": "내 피어"
   },
@@ -663,10 +666,10 @@
   "InvalidParam": { "One": "잘못된 매개변수: {param}" },
   "ShowTabs": { "One": "탭 표시" },
   "HideTabs": { "One": "탭 숨기기" },
-  "ConnectionAddress": {"One": "Connection address"},
-  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
-  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
-  "BookAliases": {"One": "Aliases in address books"},
-  "LinkedDevice": {"One": "Linked device"},
-  "UnlinkedContact": {"One": "Standalone contact"}
+  "ConnectionAddress": { "One": "연결 주소" },
+  "ConnectionAddressHelp": { "One": "새 주소록 항목을 추가할 때만 사용됩니다. 기존 항목의 주소는 그대로 유지됩니다. 비워 두면 RustDesk ID를 사용합니다." },
+  "CopyToBooksHelp": { "One": "선택한 주소록에 항목을 추가하고 기존 항목은 유지합니다. 주소록마다 고유한 주소와 별명을 지정할 수 있습니다." },
+  "BookAliases": { "One": "주소록 별명" },
+  "LinkedDevice": { "One": "연결된 장치" },
+  "UnlinkedContact": { "One": "독립 연락처" }
 }

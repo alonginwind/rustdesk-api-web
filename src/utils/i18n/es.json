@@ -478,6 +478,9 @@
   "Email": {
     "One": "Correo electrónico"
   },
+  "MyDevices": {
+    "One": "Mis dispositivos"
+  },
   "MyPeer": {
     "One": "Mis pares"
   },
@@ -677,10 +680,10 @@
   "InvalidParam": { "One": "Parámetro no válido: {param}" },
   "ShowTabs": { "One": "Mostrar pestañas" },
   "HideTabs": { "One": "Ocultar pestañas" },
-  "ConnectionAddress": {"One": "Connection address"},
-  "ConnectionAddressHelp": {"One": "Used when adding new book entries. Existing book addresses are kept. Leave empty to use the RustDesk ID."},
-  "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
-  "BookAliases": {"One": "Aliases in address books"},
-  "LinkedDevice": {"One": "Linked device"},
-  "UnlinkedContact": {"One": "Standalone contact"}
+  "ConnectionAddress": { "One": "Dirección de conexión" },
+  "ConnectionAddressHelp": { "One": "Se usa al añadir nuevas entradas a la libreta; las direcciones de las entradas existentes se mantienen. Déjelo vacío para usar el ID de RustDesk." },
+  "CopyToBooksHelp": { "One": "Agrega entradas a las libretas seleccionadas y conserva las existentes. Cada libreta puede tener su propia dirección y alias." },
+  "BookAliases": { "One": "Alias en las libretas" },
+  "LinkedDevice": { "One": "Dispositivo vinculado" },
+  "UnlinkedContact": { "One": "Contacto independiente" }
 }
