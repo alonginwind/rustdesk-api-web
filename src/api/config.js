@@ -20,3 +20,11 @@ export function admin () {
     method: 'get',
   })
 }
+
+export function sessionPolicy () {
+  return request({ url: '/config/session-policy', method: 'get' })
+}
+
+export function saveSessionPolicy (data) {
+  return request({ url: '/config/session-policy', method: 'post', data })
+}

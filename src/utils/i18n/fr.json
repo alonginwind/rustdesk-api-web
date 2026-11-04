@@ -685,5 +685,13 @@
   "CopyToBooksHelp": { "One": "Ajoute des entrées aux carnets sélectionnés tout en conservant les entrées existantes. Chaque carnet peut avoir sa propre adresse et son propre alias." },
   "BookAliases": { "One": "Alias dans les carnets" },
   "LinkedDevice": { "One": "Appareil lié" },
-  "UnlinkedContact": { "One": "Contact indépendant" }
+  "UnlinkedContact": { "One": "Contact indépendant" },
+  "SessionSettings": {"One": "Session settings"},
+  "SessionConfigUnavailable": {"One": "Session configuration is unavailable. Reload or update the backend."},
+  "SessionConfigEnv": {"One": "The session lifetime is managed by an environment variable. This file setting is read-only."},
+  "SessionConfigReadOnly": {"One": "The configuration is read-only. The deployment administrator must grant write access before saving."},
+  "SessionLifetime": {"One": "Session lifetime"},
+  "SessionConfigHelp": {"One": "Changes only app.token-expire in the existing configuration. For example, 720h is 30 days, 168h is seven days; h, m and s are supported."},
+  "SessionEffective": {"One": "Effective lifetime"},
+  "SessionChangeHelp": {"One": "The new value applies to new and renewed sessions. Automatic renewal happens in the last third of the lifetime. Existing expired or manually revoked sessions stay invalid; manual revocation is available under Login tokens."}
 }

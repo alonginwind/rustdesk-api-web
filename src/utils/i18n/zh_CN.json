@@ -671,5 +671,13 @@
   "CopyToBooksHelp": { "One": "将条目添加到所选地址簿，并保留已有条目。每个地址簿都可以单独设置地址和别名。" },
   "BookAliases": { "One": "地址簿中的别名" },
   "LinkedDevice": { "One": "关联设备" },
-  "UnlinkedContact": { "One": "独立联系人" }
+  "UnlinkedContact": { "One": "独立联系人" },
+  "SessionSettings": {"One": "Session settings"},
+  "SessionConfigUnavailable": {"One": "Session configuration is unavailable. Reload or update the backend."},
+  "SessionConfigEnv": {"One": "The session lifetime is managed by an environment variable. This file setting is read-only."},
+  "SessionConfigReadOnly": {"One": "The configuration is read-only. The deployment administrator must grant write access before saving."},
+  "SessionLifetime": {"One": "Session lifetime"},
+  "SessionConfigHelp": {"One": "Changes only app.token-expire in the existing configuration. For example, 720h is 30 days, 168h is seven days; h, m and s are supported."},
+  "SessionEffective": {"One": "Effective lifetime"},
+  "SessionChangeHelp": {"One": "The new value applies to new and renewed sessions. Automatic renewal happens in the last third of the lifetime. Existing expired or manually revoked sessions stay invalid; manual revocation is available under Login tokens."}
 }
