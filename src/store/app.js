@@ -45,6 +45,7 @@ export const useAppStore = defineStore({
       appConfig: {
         web_client: 1,
         device_address_books: false,
+        team_mode: false,
       },
       rustdeskConfig: {
         'id_server': '',
@@ -83,7 +84,7 @@ export const useAppStore = defineStore({
         this.setting.appConfig = res.data
         this.setting.appConfigLoaded = true
       }).catch(() => {
-        this.setting.appConfig = { web_client: 0, device_address_books: false }
+        this.setting.appConfig = { web_client: 0, device_address_books: false, team_mode: false }
         this.setting.appConfigLoaded = true
       })
     },

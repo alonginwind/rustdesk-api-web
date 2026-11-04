@@ -9,3 +9,11 @@ test('only an explicit server capability enables device address books', () => {
   }
   assert.equal(books.deviceAddressBooksEnabled({ device_address_books: true }), true)
 })
+
+test('only an explicit server capability enables team mode', () => {
+  assert.equal(typeof books.teamModeEnabled, 'function')
+  for (const config of [undefined, {}, { team_mode: false }, { team_mode: 'true' }, { team_mode: 1 }]) {
+    assert.equal(books.teamModeEnabled(config), false)
+  }
+  assert.equal(books.teamModeEnabled({ team_mode: true }), true)
+})

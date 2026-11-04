@@ -39,7 +39,7 @@
                 <el-dropdown-item command="export">{{ T('Export') }}</el-dropdown-item>
                 <el-dropdown-item command="import">{{ T('Import') }}</el-dropdown-item>
                 <el-dropdown-item command="batchDelete" divided>{{ T('BatchDelete') }}</el-dropdown-item>
-                <el-dropdown-item command="batchAddToAB">{{ T('BatchAddToAB') }}</el-dropdown-item>
+                <el-dropdown-item v-if="!teamMode" command="batchAddToAB">{{ T('BatchAddToAB') }}</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -74,7 +74,7 @@
               </template>
             </el-popover>
             <el-button type="danger" @click="toBatchDelete">{{ T('BatchDelete') }}</el-button>
-            <el-button type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>
+            <el-button v-if="!teamMode" type="primary" @click="toBatchAddToAB">{{ T('BatchAddToAB') }}</el-button>
           </template>
         </el-form-item>
       </el-form>
@@ -299,7 +299,7 @@
   import { useAppStore } from '@/store/app'
   import PeerBookAliases from '@/components/peerBookAliases.vue'
   import PeerConnectionAddress from '@/components/peerConnectionAddress.vue'
-  import { connectionAddress, deviceAddressBooksEnabled } from '@/utils/peerBooks.mjs'
+  import { connectionAddress, deviceAddressBooksEnabled, teamModeEnabled } from '@/utils/peerBooks.mjs'
   import { connectByClient } from '@/utils/peer'
   import { ArrowDown, ArrowUp, CopyDocument, Setting } from '@element-plus/icons'
   import { handleClipboard } from '@/utils/clipboard'
@@ -313,6 +313,8 @@
   const isMobile = useIsMobile()
   const appStore = useAppStore()
   const enhanced = computed(() => deviceAddressBooksEnabled(appStore.setting.appConfig))
+  // Team mode pins every member to the admin's book, so batch adding is hidden.
+  const teamMode = computed(() => teamModeEnabled(appStore.setting.appConfig))
   const deviceAddress = row => enhanced.value ? connectionAddress(row) : row.id
 
   // Mobile action items

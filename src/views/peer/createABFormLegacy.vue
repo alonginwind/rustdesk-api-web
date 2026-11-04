@@ -1,20 +1,20 @@
 <template>
 
   <el-form class="dialog-form" ref="form" :model="ABFormData" label-width="120px">
-    <!--  <el-form-item :label="T('Owner')" prop="user_ids" required>-->
-    <!--    <el-select v-model="ABFormData.user_ids" multiple @change="changeUser">-->
-    <!--      <el-option-->
-    <!--          v-for="item in allUsers"-->
-    <!--          :key="item.id"-->
-    <!--          :label="item.username"-->
-    <!--          :value="item.id"-->
-    <!--      ></el-option>-->
-    <!--    </el-select>-->
-    <!--  </el-form-item>-->
+    <el-form-item v-if="!teamMode" :label="T('Owner')" prop="user_ids" required>
+      <el-select v-model="ABFormData.user_ids" multiple @change="changeUser">
+        <el-option
+            v-for="item in allUsers"
+            :key="item.id"
+            :label="item.username"
+            :value="item.id"
+        ></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item :label="T('AddressBookName')" v-if="ABFormData.user_ids.length<=1" required prop="collection_id">
       <el-select v-model="ABFormData.collection_id" clearable @change="changeCollectionForUpdate">
         <!--  <el-option :value="0" :label="T('MyAddressBook')"></el-option>-->
-        <el-option v-for="c in collectionListResForUpdate.list.filter(c => c.id !== 0)" :key="c.id" :label="c.name" :value="c.id"></el-option>
+        <el-option v-for="c in collectionListResForUpdate.list" :key="c.id" :label="c.name" :value="c.id"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="ID" prop="id" required>
@@ -60,10 +60,12 @@
 
   import { T } from '@/utils/i18n'
   import { loadAllUsers } from '@/global'
-  import { onMounted, defineProps, defineEmits, onActivated } from 'vue'
+  import { onMounted, defineProps, defineEmits, onActivated, computed, watch } from 'vue'
   import { useRepositories as useABRepositories } from '@/views/address_book'
   import { batchCreate } from '@/api/address_book'
   import { ElMessage } from 'element-plus'
+  import { useAppStore } from '@/store/app'
+  import { teamModeEnabled } from '@/utils/peerBooks.mjs'
 
   const emits = defineEmits(['cancel', 'success'])
   const props = defineProps({
@@ -83,18 +85,25 @@
     tagListRes,
     fromPeer,
   } = useABRepositories('admin')
+  const appStore = useAppStore()
+  // Team mode pins every entry to the admin's book, so the owner picker is hidden.
+  const teamMode = computed(() => teamModeEnabled(appStore.setting.appConfig))
+  watch(teamMode, val => {
+    if (val) {
+      ABFormData.user_ids = [1]
+      changeUserForUpdate(1)
+      ABFormData.collection_id = null
+    }
+  }, { immediate: true })
   onMounted(() => {
     fromPeer(props.peer)
-    changeUser([1])
   })
 
   const changeUser = async (val) => {
-    ABFormData.user_ids = [1]
     ABFormData.collection_id = 0
     ABFormData.tags = []
     if (val.length === 1) {
       changeUserForUpdate(val[0])
-      ABFormData.collection_id = null
     }
     if (val.length === 0) {
       collectionListResForUpdate.list = []
@@ -104,10 +113,6 @@
   const ABSubmit = async () => {
     if (ABFormData.user_ids.length === 0) {
       ElMessage.error(T('ParamRequired', { param: T('Owner') }))
-      return
-    }
-    if (!ABFormData.collection_id) {
-      ElMessage.error(T('ParamRequired', { param: T('AddressBookName')}))
       return
     }
     if (!ABFormData.alias) {
@@ -121,6 +126,9 @@
     if (ABFormData.user_ids.length > 1) {
       ABFormData.collection_id = 0
       ABFormData.tags = []
+    } else if (!ABFormData.collection_id) {
+      ElMessage.error(T('ParamRequired', { param: T('AddressBookName')}))
+      return
     }
     const res = await batchCreate(ABFormData).catch(_ => false)
     if (res) {

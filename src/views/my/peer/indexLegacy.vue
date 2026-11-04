@@ -196,9 +196,11 @@
   import { batchCreateFromPeers } from '@/api/my/address_book'
   import { useIsMobile } from '@/utils/useIsMobile'
   import MobileActions from '@/components/mobileActions.vue'
+  import { teamModeEnabled } from '@/utils/peerBooks.mjs'
 
   const isMobile = useIsMobile()
   const appStore = useAppStore()
+  const teamMode = computed(() => teamModeEnabled(appStore.setting.appConfig))
 
   // Mobile action items
   const myPeerMobileActions = (row) => {
@@ -321,7 +323,8 @@
   }
 
   const onCollectionChange = (val) => {
-    if (val > 0) {
+    // Team mode pins entries to the admin book; otherwise the backend derives the owner from the current user.
+    if (val > 0 && teamMode.value) {
       ABFormData.user_id = 1
     }
     changeCollectionForUpdate(val)
@@ -332,13 +335,21 @@
     formVisible: ABFormVisible,
     formData: ABFormData,
     collectionListResForUpdate,
+    getCollectionListForUpdate,
     getCollectionSharedForUpdate,
     tagListRes,
     changeCollectionForUpdate,
     submit: ABSubmit,
     fromPeer,
   } = useABRepositories('my')
-  onMounted(getCollectionSharedForUpdate)
+  // Team mode exposes the admin's shared books; otherwise members pick from their own books.
+  watch(teamMode, val => {
+    if (val) {
+      getCollectionSharedForUpdate()
+    } else {
+      getCollectionListForUpdate()
+    }
+  }, { immediate: true })
   const toAddressBook = (peer) => {
     fromPeer(peer)
     ABFormVisible.value = true

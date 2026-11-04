@@ -175,7 +175,6 @@ export function useRepositories (api_type = 'my') {
     const api = formData.row_id ? apis[api_type].update : apis[api_type].create
     const payload = { ...formData }
     if (!enhanced()) delete payload.peer_row_id
-    if (!enhanced() && api_type === 'my' && !formData.row_id) delete payload.user_id
     const res = await api(payload).catch(_ => false)
     if (res) {
       ElMessage.success(T('OperationSuccess'))

@@ -1,6 +1,9 @@
 // Missing capability (including older backends) always selects legacy behavior.
 export const deviceAddressBooksEnabled = (config) => config?.device_address_books === true
 
+// Team mode pins every member to the admin's books, so member-level batch book operations are hidden.
+export const teamModeEnabled = (config) => config?.team_mode === true
+
 export const connectionAddress = (peer) => peer.connection_address || peer.id
 
 // Copy values, never bind a book's editable destination to the device default.
