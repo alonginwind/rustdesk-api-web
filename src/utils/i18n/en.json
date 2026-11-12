@@ -685,5 +685,8 @@
   "CopyToBooksHelp": {"One": "Adds entries to the selected books and keeps existing entries. Each book can have its own address and alias."},
   "BookAliases": {"One": "Aliases in address books"},
   "LinkedDevice": {"One": "Linked device"},
-  "UnlinkedContact": {"One": "Standalone contact"}
+  "UnlinkedContact": {"One": "Standalone contact"},
+  "WarningInfo": { "One": "Warnings" },
+  "TeamModeOnly": { "One": "This page is only available when team mode is enabled" },
+  "DuplicateAliasTip": { "One": "{count} devices share an alias with another device, please check whether unique aliases are needed." }
 }

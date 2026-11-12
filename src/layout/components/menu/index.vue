@@ -13,11 +13,12 @@
 </template>
 
 <script>
-  import { defineComponent, ref, onMounted, watch, computed } from 'vue'
+  import { defineComponent, onMounted, watch, computed } from 'vue'
   import { useRouteStore } from '@/store/router'
   import MenuItem from '@/layout/components/menu/item.vue'
   import { useRoute } from 'vue-router'
   import { useAppStore } from '@/store/app'
+  import { teamModeEnabled } from '@/utils/peerBooks.mjs'
 
   export default defineComponent({
     name: 'Menu',
@@ -31,15 +32,18 @@
       },
     },
     setup (props) {
-      const routes = ref([])
       const route = useRoute()
       const app = useAppStore()
       const isCollapse = computed(() =>
         props.forceCollapse !== null ? props.forceCollapse : app.setting.sideIsCollapse
       )
       const activeIndex = computed(() => route.name)
-
-      routes.value = useRouteStore().routes
+      const teamModeOn = computed(() => teamModeEnabled(app.setting.appConfig))
+      // Config-driven entries stay hidden until team mode is known to be on.
+      const filterTeamModeRoutes = (routes) => routes
+        .filter(r => !r.meta?.teamModeOnly || teamModeOn.value)
+        .map(r => r.children?.length ? { ...r, children: filterTeamModeRoutes(r.children) } : { ...r })
+      const routes = computed(() => filterTeamModeRoutes(useRouteStore().routes))
       return {
         routes,
         activeIndex,

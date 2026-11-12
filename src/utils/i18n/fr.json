@@ -685,5 +685,8 @@
   "CopyToBooksHelp": { "One": "Ajoute des entrées aux carnets sélectionnés tout en conservant les entrées existantes. Chaque carnet peut avoir sa propre adresse et son propre alias." },
   "BookAliases": { "One": "Alias dans les carnets" },
   "LinkedDevice": { "One": "Appareil lié" },
-  "UnlinkedContact": { "One": "Contact indépendant" }
+  "UnlinkedContact": { "One": "Contact indépendant" },
+  "WarningInfo": { "One": "Avertissements" },
+  "TeamModeOnly": { "One": "Cette page n'est disponible que lorsque le mode équipe est activé" },
+  "DuplicateAliasTip": { "One": "{count} appareils partagent un alias avec un autre appareil, veuillez vérifier si des alias uniques sont nécessaires." }
 }

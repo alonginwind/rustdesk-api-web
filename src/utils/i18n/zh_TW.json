@@ -671,5 +671,8 @@
   "CopyToBooksHelp": { "One": "將項目新增到所選地址簿，並保留既有項目。每個地址簿都可以單獨設定地址和別名。" },
   "BookAliases": { "One": "地址簿中的別名" },
   "LinkedDevice": { "One": "關聯裝置" },
-  "UnlinkedContact": { "One": "獨立聯絡人" }
+  "UnlinkedContact": { "One": "獨立聯絡人" },
+  "WarningInfo": { "One": "警告資訊" },
+  "TeamModeOnly": { "One": "該頁面僅在團隊模式開啟時可用" },
+  "DuplicateAliasTip": { "One": "共 {count} 台裝置的別名與其他裝置重複，請核對是否需要改為唯一別名。" }
 }

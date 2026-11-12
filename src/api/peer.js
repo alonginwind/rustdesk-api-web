@@ -13,6 +13,13 @@ export function detail (id) {
   })
 }
 
+export function duplicateAlias (params) {
+  return request({
+    url: '/peer/duplicateAlias',
+    params,
+  })
+}
+
 export function create (data) {
   return request({
     url: '/peer/create',

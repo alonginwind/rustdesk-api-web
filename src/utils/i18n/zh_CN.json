@@ -671,5 +671,8 @@
   "CopyToBooksHelp": { "One": "将条目添加到所选地址簿，并保留已有条目。每个地址簿都可以单独设置地址和别名。" },
   "BookAliases": { "One": "地址簿中的别名" },
   "LinkedDevice": { "One": "关联设备" },
-  "UnlinkedContact": { "One": "独立联系人" }
+  "UnlinkedContact": { "One": "独立联系人" },
+  "WarningInfo": { "One": "警告信息" },
+  "TeamModeOnly": { "One": "该页面仅在团队模式开启时可用" },
+  "DuplicateAliasTip": { "One": "共 {count} 台设备的别名与其他设备重复，请核对是否需要改为唯一别名。" }
 }

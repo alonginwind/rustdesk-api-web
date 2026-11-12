@@ -203,6 +203,12 @@ export const asyncRoutes = [
         component: () => import('@/views/operation_log/index.vue'),
       },
       {
+        path: '/warningInfo',
+        name: 'WarningInfo',
+        meta: { title: 'WarningInfo', icon: 'Warning', teamModeOnly: true /*keepAlive: true*/ },
+        component: () => import('@/views/peer/duplicateAlias.vue'),
+      },
+      {
         path: '/shareRecord',
         name: 'ShareRecord',
         meta: { title: 'ShareRecord', icon: 'Share' /*keepAlive: true*/ },
