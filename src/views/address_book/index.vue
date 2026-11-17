@@ -21,9 +21,9 @@
         <el-form-item label="ID">
           <el-input v-model="listQuery.id" clearable></el-input>
         </el-form-item>
-        <!--     <el-form-item :label="T('Username')">-->
-        <!--       <el-input v-model="listQuery.username" clearable></el-input>-->
-        <!--     </el-form-item>-->
+        <el-form-item :label="T('Hostname')">
+          <el-input v-model="listQuery.hostname" clearable></el-input>
+        </el-form-item>
         <el-form-item :label="T('Alias')">
           <el-input v-model="listQuery.alias" clearable></el-input>
         </el-form-item>
