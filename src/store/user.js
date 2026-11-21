@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { current, login } from '@/api/user'
-import { setToken, removeToken, setCode, removeCode } from '@/utils/auth'
+import { current, login, logout as endSession } from '@/api/user'
+import { getToken, setToken, removeToken, setCode, removeCode } from '@/utils/auth'
 import { useRouteStore } from '@/store/router'
 import { useAppStore } from '@/store/app'
 import { oidcAuth, oidcQuery } from '@/api/login'
@@ -19,12 +19,15 @@ export const useUserStore = defineStore({
 
   actions: {
     logout () {
+      const token = this.token || getToken()
       removeToken()
       removeCode()
       this.$patch({
         name: '',
         role: {},
       })
+      // Resolves once the server has deleted the session, or failed to.
+      return token ? endSession(token) : Promise.resolve()
     },
 
     saveUserData (userData) {

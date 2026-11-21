@@ -1,4 +1,15 @@
+import axios from 'axios'
 import request from '@/utils/request'
+
+// Not through `request`: its 403 handling would show an error and reload the page.
+export function logout (token) {
+  return axios.post('/logout', {}, {
+    baseURL: import.meta.env.VITE_SERVER_API,
+    headers: { 'api-token': token },
+    withCredentials: true,
+    timeout: 5000,
+  }).catch(() => {})
+}
 
 export function login (data) {
   return request({
